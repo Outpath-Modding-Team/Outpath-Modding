@@ -20,10 +20,10 @@ namespace Outpath_Modding.Loader
             if (!Directory.Exists(AssetBundles)) Directory.CreateDirectory(AssetBundles);
             if (!Directory.Exists(Log)) Directory.CreateDirectory(Log);
 
-            if (!File.Exists(Path.Combine(Paths.Log, "LogError.txt"))) File.Create(Path.Combine(Paths.Log, "LogMessage.txt"));
-            if (!File.Exists(Path.Combine(Paths.Log, "LogError.txt"))) File.Create(Path.Combine(Paths.Log, "LogDebug.txt"));
-            if (!File.Exists(Path.Combine(Paths.Log, "LogError.txt"))) File.Create(Path.Combine(Paths.Log, "LogInfo.txt"));
-            if (!File.Exists(Path.Combine(Paths.Log, "LogError.txt"))) File.Create(Path.Combine(Paths.Log, "LogWarn.txt"));
+            if (!File.Exists(Path.Combine(Paths.Log, "LogMessage.txt"))) File.Create(Path.Combine(Paths.Log, "LogMessage.txt"));
+            if (!File.Exists(Path.Combine(Paths.Log, "LogDebug.txt"))) File.Create(Path.Combine(Paths.Log, "LogDebug.txt"));
+            if (!File.Exists(Path.Combine(Paths.Log, "LogInfo.txt"))) File.Create(Path.Combine(Paths.Log, "LogInfo.txt"));
+            if (!File.Exists(Path.Combine(Paths.Log, "LogWarn.txt"))) File.Create(Path.Combine(Paths.Log, "LogWarn.txt"));
             if (!File.Exists(Path.Combine(Paths.Log, "LogError.txt"))) File.Create(Path.Combine(Paths.Log, "LogError.txt"));
         }
     }

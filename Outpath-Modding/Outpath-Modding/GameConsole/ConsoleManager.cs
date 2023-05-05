@@ -14,11 +14,11 @@ namespace Outpath_Modding.GameConsole
 
         public static void SetupConsole()
         {
-            Logger.Debug("Console loading...");
+            Logger.Info("Console loading...");
 
             if (Console != null)
             {
-                Logger.Debug("Console is loaded!");
+                Logger.Info("Console is loaded!");
                 return;
             }
 
@@ -47,7 +47,7 @@ namespace Outpath_Modding.GameConsole
 
                 Console = ConsoleObj.AddComponent<Console>();
 
-                Logger.Debug("Console is loaded!");
+                Logger.Info("Console is loaded!");
             }
             catch (Exception e)
             {

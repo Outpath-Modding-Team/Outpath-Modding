@@ -9,22 +9,22 @@ namespace Outpath_Modding.Unity.AssetBundleLoader
     {
         public static void LoadAssetBundle(CustomAssetBundle customAssetBundle)
         {
-            Logger.Debug("Loading AssetBundle has been started!");
+            Logger.Info("AssetBundle loading started!");
 
             if (customAssetBundle.LoadedAssets != null && customAssetBundle.LoadedAssets.Length > 0) return;
 
-            Logger.Debug("Loading AssetBundle continue!");
+            Logger.Info("AssetBundle loading continue!");
 
             var myLoadedAssetBundle = AssetBundle.LoadFromFile(Path.Combine(Paths.AssetBundles, customAssetBundle.Name));
             if (myLoadedAssetBundle == null)
             {
-                Logger.Debug("Failed to load AssetBundle! Path: " + Path.Combine(Paths.AssetBundles, customAssetBundle.Name));
+                Logger.Info("Failed to load AssetBundle! Path: " + Path.Combine(Paths.AssetBundles, customAssetBundle.Name));
                 return;
             }
 
             customAssetBundle.AssetBundle = myLoadedAssetBundle;
 
-            Logger.Debug("Loading AssetBundle seccsses!");
+            Logger.Info("AssetBundle loading seccsses!");
         }
     }
 }

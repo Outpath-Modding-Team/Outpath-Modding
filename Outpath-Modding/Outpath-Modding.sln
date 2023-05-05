@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33530.505
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Outpath-Modding", "Outpath-Modding\Outpath-Modding.csproj", "{547EEE60-A515-437E-A8CB-B6EC92A95657}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{547EEE60-A515-437E-A8CB-B6EC92A95657}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{547EEE60-A515-437E-A8CB-B6EC92A95657}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{547EEE60-A515-437E-A8CB-B6EC92A95657}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{547EEE60-A515-437E-A8CB-B6EC92A95657}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7D3BA55E-2669-436A-B8F1-B338415AB64E}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,7 @@
+ManifestFileVersion: 0
+CRC: 3407318825
+AssetBundleManifest:
+  AssetBundleInfos:
+    Info_0:
+      Name: console
+      Dependencies: {}

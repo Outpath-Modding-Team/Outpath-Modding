@@ -1,2 +1,2 @@
 # Outpath-Modding
-Modding framework for game Outpath
+Modding framework for game Outpath: First Journey.

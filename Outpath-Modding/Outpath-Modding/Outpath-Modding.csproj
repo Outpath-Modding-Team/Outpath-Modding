@@ -10,6 +10,7 @@
     <RootNamespace>Outpath_Modding</RootNamespace>
     <AssemblyName>Outpath-Modding</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <LangVersion>9.0</LangVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
   </PropertyGroup>
@@ -66,6 +67,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="API\Mod\IOMod.cs" />
+    <Compile Include="API\Mod\OMod.cs" />
+    <Compile Include="GameConsole\Commands\Ping.cs" />
+    <Compile Include="GameConsole\Components\CommandManager.cs" />
+    <Compile Include="GameConsole\Components\ICommand.cs" />
     <Compile Include="GameConsole\ConsoleManager.cs" />
     <Compile Include="GameConsole\Logger.cs" />
     <Compile Include="GameConsole\Components\Console.cs" />
@@ -77,6 +83,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Unity\AssetBundleLoader\AssetBundleLoader.cs" />
     <Compile Include="Unity\AssetBundleLoader\CustomAssetBundle.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Events\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

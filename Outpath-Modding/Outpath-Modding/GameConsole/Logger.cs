@@ -11,90 +11,90 @@ namespace Outpath_Modding.GameConsole
 
         public static void Message(string text)
         {
-            StreamReader sr = new StreamReader(Path.Combine(Paths.Log, "LogMessage.txt"));
+            StreamReader sr = new(Path.Combine(Paths.Log, "LogMessage.txt"));
             string line = sr.ReadLine();
             sr.Close();
-            StreamWriter sw = new StreamWriter(Path.Combine(Paths.Log, "LogMessage.txt"));
+            StreamWriter sw = new(Path.Combine(Paths.Log, "LogMessage.txt"));
 
             sw.WriteLine(line + "\n" + text);
             sw.Close();
 
-            LogText.Add(new TempLog(text, 0));
+            LogText.Add(new(text, 0));
 
             if (ConsoleManager.Console != null) ConsoleManager.Console.SendLog(text);
         }
 
         public static void Message(string text, Color color)
         {
-            StreamReader sr = new StreamReader(Path.Combine(Paths.Log, "LogMessage.txt"));
+            StreamReader sr = new(Path.Combine(Paths.Log, "LogMessage.txt"));
             string line = sr.ReadLine();
             sr.Close();
-            StreamWriter sw = new StreamWriter(Path.Combine(Paths.Log, "LogMessage.txt"));
+            StreamWriter sw = new(Path.Combine(Paths.Log, "LogMessage.txt"));
 
             sw.WriteLine(line + "\n" + text);
             sw.Close();
 
-            LogText.Add(new TempLog(text, 1, color));
+            LogText.Add(new(text, 1, color));
 
             if (ConsoleManager.Console != null) ConsoleManager.Console.SendLog(text, color);
         }
 
         public static void Debug(string text)
         {
-            StreamReader sr = new StreamReader(Path.Combine(Paths.Log, "LogDebug.txt"));
+            StreamReader sr = new(Path.Combine(Paths.Log, "LogDebug.txt"));
             string line = sr.ReadLine();
             sr.Close();
-            StreamWriter sw = new StreamWriter(Path.Combine(Paths.Log, "LogDebug.txt"));
+            StreamWriter sw = new(Path.Combine(Paths.Log, "LogDebug.txt"));
 
             sw.WriteLine(line + "\n" + text);
             sw.Close();
 
-            LogText.Add(new TempLog(text, 2));
+            LogText.Add(new(text, 2));
 
             if (ConsoleManager.Console != null) ConsoleManager.Console.SendDebug(text);
         }
 
         public static void Info(string text)
         {
-            StreamReader sr = new StreamReader(Path.Combine(Paths.Log, "LogInfo.txt"));
+            StreamReader sr = new(Path.Combine(Paths.Log, "LogInfo.txt"));
             string line = sr.ReadLine();
             sr.Close();
-            StreamWriter sw = new StreamWriter(Path.Combine(Paths.Log, "LogInfo.txt"));
+            StreamWriter sw = new(Path.Combine(Paths.Log, "LogInfo.txt"));
 
             sw.WriteLine(line + "\n" + text);
             sw.Close();
 
-            LogText.Add(new TempLog(text, 3));
+            LogText.Add(new(text, 3));
 
             if (ConsoleManager.Console != null) ConsoleManager.Console.SendInfo(text);
         }
 
         public static void Warn(string text)
         {
-            StreamReader sr = new StreamReader(Path.Combine(Paths.Log, "LogWarn.txt"));
+            StreamReader sr = new(Path.Combine(Paths.Log, "LogWarn.txt"));
             string line = sr.ReadLine();
             sr.Close();
-            StreamWriter sw = new StreamWriter(Path.Combine(Paths.Log, "LogWarn.txt"));
+            StreamWriter sw = new(Path.Combine(Paths.Log, "LogWarn.txt"));
 
             sw.WriteLine(line + "\n" + text);
             sw.Close();
 
-            LogText.Add(new TempLog(text, 4));
+            LogText.Add(new(text, 4));
 
             if (ConsoleManager.Console != null) ConsoleManager.Console.SendWarn(text);
         }
 
         public static void Error(string text)
         {
-            StreamReader sr = new StreamReader(Path.Combine(Paths.Log, "LogError.txt"));
+            StreamReader sr = new(Path.Combine(Paths.Log, "LogError.txt"));
             string line = sr.ReadLine();
             sr.Close();
-            StreamWriter sw = new StreamWriter(Path.Combine(Paths.Log, "LogError.txt"));
+            StreamWriter sw = new(Path.Combine(Paths.Log, "LogError.txt"));
 
             sw.WriteLine(line + "\n" + text);
             sw.Close();
 
-            LogText.Add(new TempLog(text, 5));
+            LogText.Add(new(text, 5));
 
             if (ConsoleManager.Console != null) ConsoleManager.Console.SendError(text);
         }

@@ -123,9 +123,10 @@ namespace Outpath_Modding.GameConsole.Components
         {
             if (string.IsNullOrEmpty(messageInputField.text)) return;
 
-            consoleText.text = consoleText.text + "\n" + $"[{DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss")}] " + messageInputField.text;
-            CommandManager.OnSendCommand(messageInputField.text);
+            string text = messageInputField.text;
             messageInputField.text = "";
+            consoleText.text = consoleText.text + "\n" + $"[{DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss")}] " + text;
+            CommandManager.OnSendCommand(text);
         }
 
         public void SendError(string text)

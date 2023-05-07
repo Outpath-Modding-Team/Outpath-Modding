@@ -5,5 +5,12 @@
 
 Modding framework for game Outpath: First Journey.
 
+## Installation
+
+### Windows
+1. Download Outpath-Modding.rar in one of the versions [here](https://github.com/MrAfitol/Outpath-Modding/releases) (recommend installing the latest one)
+2. Extract and move all files to the game folder (for example: **\Steam\steamapps\common\Outpath First Journey*)
+3. Run the game and done
+
 ## Social media
 * [Discord](https://discord.gg/XnjNVRz9XM)

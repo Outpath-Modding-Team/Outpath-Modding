@@ -15,6 +15,8 @@ namespace Outpath_Modding
 		{
 			try
 			{
+				if (IsLoaded) return;
+
 				if (!File.Exists(Loader.ModAssemblePath))
 				{
 					Loader.IsLoaded = false;

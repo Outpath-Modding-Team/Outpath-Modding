@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using UnityEngine;
 using System.Reflection;
 
 namespace Outpath_Modding
@@ -8,39 +9,43 @@ namespace Outpath_Modding
 	{
 		public static string ModErrorPath = Path.Combine(Directory.GetCurrentDirectory(), "LogError.txt");
 		public static string ModAssemblePath = Path.Combine(Directory.GetCurrentDirectory(), "Outpath-Modding.dll");
+		public static string HarmonyAssemblePath = Path.Combine(Application.dataPath, "Managed", "0Harmony.dll");
 		public static Assembly ModAssembly;
+		public static Assembly HarmonyAssembly;
 		public static bool IsLoaded;
 
 		public static void Load()
 		{
 			try
 			{
-				if (IsLoaded) return;
+				if (IsLoaded)
+					return;
 
-				if (!File.Exists(Loader.ModAssemblePath))
-				{
-					Loader.IsLoaded = false;
-				}
+                if (!File.Exists(Loader.ModAssemblePath) || !File.Exists(Loader.HarmonyAssemblePath))
+                    Loader.IsLoaded = false;
 
-				Loader.ModAssembly = Assembly.LoadFile(Loader.ModAssemblePath);
+				Loader.HarmonyAssembly = Assembly.LoadFile(Loader.HarmonyAssemblePath);
 
-				if (Loader.ModAssembly != null)
+				if (HarmonyAssembly != null)
 				{
-					Loader.IsLoaded = true;
-					Loader.LoadModding();
+					Loader.ModAssembly = Assembly.LoadFile(Loader.ModAssemblePath);
+
+					if (Loader.ModAssembly != null)
+					{
+						Loader.IsLoaded = true;
+						Loader.LoadModding();
+					}
+					else Loader.IsLoaded = false;
 				}
-				else
-				{
-					Loader.IsLoaded = false;
-				}
-			}
+				else Loader.IsLoaded = false;
+            }
 			catch (Exception ex)
 			{
-				using (StreamWriter streamWriter = File.CreateText(Loader.ModErrorPath))
+                Loader.IsLoaded = false;
+                using (StreamWriter streamWriter = File.CreateText(Loader.ModErrorPath))
 				{
 					streamWriter.WriteLine(ex.ToString());
 				}
-				Loader.IsLoaded = false;
 			}
 		}
 

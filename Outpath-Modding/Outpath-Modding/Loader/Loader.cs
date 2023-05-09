@@ -21,7 +21,6 @@ namespace Outpath_Modding.Loader
         public static void Load()
         {
             Paths.SetupModPaths();
-
             ConsoleManager.SetupConsole();
 
             LoadDependencies();

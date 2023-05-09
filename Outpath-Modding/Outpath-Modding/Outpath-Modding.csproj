@@ -36,6 +36,10 @@
     <Reference Include="0Harmony, Version=2.2.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Lib.Harmony.2.2.2\lib\net48\0Harmony.dll</HintPath>
     </Reference>
+    <Reference Include="Assembly-CSharp, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Outpath First Journey\Dependencies\Assembly-CSharp.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -72,6 +76,9 @@
   <ItemGroup>
     <Compile Include="API\Mod\IOMod.cs" />
     <Compile Include="API\Mod\OMod.cs" />
+    <Compile Include="API\Features\Game.cs" />
+    <Compile Include="API\Features\Player.cs" />
+    <Compile Include="API\Features\World.cs" />
     <Compile Include="GameConsole\Commands\Ping.cs" />
     <Compile Include="GameConsole\Components\CommandManager.cs" />
     <Compile Include="GameConsole\Components\ICommand.cs" />

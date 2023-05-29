@@ -79,6 +79,10 @@
     <Compile Include="API\Features\Game.cs" />
     <Compile Include="API\Features\Player.cs" />
     <Compile Include="API\Features\World.cs" />
+    <Compile Include="Events\EventArguments\ChangedSceneEventArgs.cs" />
+    <Compile Include="Events\EventArguments\PickupedItemEventArgs.cs" />
+    <Compile Include="Events\EventsManager.cs" />
+    <Compile Include="Events\Patches\PickupedItemPatch.cs" />
     <Compile Include="GameConsole\Commands\Ping.cs" />
     <Compile Include="GameConsole\Components\CommandManager.cs" />
     <Compile Include="GameConsole\Components\ICommand.cs" />
@@ -94,9 +98,7 @@
     <Compile Include="Unity\AssetBundleLoader\AssetBundleLoader.cs" />
     <Compile Include="Unity\AssetBundleLoader\CustomAssetBundle.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Events\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>

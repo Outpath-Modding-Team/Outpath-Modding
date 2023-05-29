@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using Outpath_Modding.GameConsole;
 using Outpath_Modding.GameConsole.Components;
 using Outpath_Modding.GameConsole.Commands;
+using Outpath_Modding.Events;
 
 namespace Outpath_Modding.Loader
 {
@@ -25,6 +26,8 @@ namespace Outpath_Modding.Loader
 
             LoadDependencies();
             LoadMods();
+
+            EventsManager.OnPatch();
 
             CommandManager.AddCommand(new Ping());
         }

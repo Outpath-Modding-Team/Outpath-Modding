@@ -81,8 +81,10 @@
     <Compile Include="API\Features\World.cs" />
     <Compile Include="Events\EventArguments\ChangedSceneEventArgs.cs" />
     <Compile Include="Events\EventArguments\PickupedItemEventArgs.cs" />
+    <Compile Include="Events\EventArguments\TakeOutResourceEventArgs.cs" />
     <Compile Include="Events\EventsManager.cs" />
     <Compile Include="Events\Patches\PickupedItemPatch.cs" />
+    <Compile Include="Events\Patches\TakeOutResourcePatch.cs" />
     <Compile Include="GameConsole\Commands\Ping.cs" />
     <Compile Include="GameConsole\Components\CommandManager.cs" />
     <Compile Include="GameConsole\Components\ICommand.cs" />

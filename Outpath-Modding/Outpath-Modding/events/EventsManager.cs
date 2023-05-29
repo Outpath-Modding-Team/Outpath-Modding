@@ -18,6 +18,8 @@ namespace Outpath_Modding.Events
 
         public static event OutputhEventHandler<PickupedItemEventArgs> PickupedItem;
 
+        public static event OutputhEventHandler<TakeOutResourceEventArgs> TakeOutResource;
+
         public static event OutputhEventHandler GameLoaded;
 
         public static void InvokeEvent<T>(this OutputhEventHandler<T> eventHandler, T args)
@@ -67,6 +69,11 @@ namespace Outpath_Modding.Events
         public static void OnPickupedItem(PickupedItemEventArgs eventArgs)
         {
             PickupedItem.InvokeEvent(eventArgs);
+        }
+
+        public static void OnTakeOutResource(TakeOutResourceEventArgs eventArgs)
+        {
+            TakeOutResource.InvokeEvent(eventArgs);
         }
 
         public static void OnGameLoaded()

@@ -10,8 +10,6 @@ namespace Outpath_Modding.Events.Patches
     {
         static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions, ILGenerator il)
         {
-            LocalBuilder eventArgs = il.DeclareLocal(typeof(PickupedItemEventArgs));
-
             var code = new List<CodeInstruction>(instructions);
 
             int insertionIndex = -1;

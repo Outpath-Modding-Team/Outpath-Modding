@@ -5,8 +5,8 @@ using System.Reflection;
 
 namespace Outpath_Modding
 {
-	public class Loader
-	{
+	public class LoaderManager
+    {
 		public static string ModErrorPath = Path.Combine(Directory.GetCurrentDirectory(), "LogError.txt");
 		public static string ModAssemblePath = Path.Combine(Directory.GetCurrentDirectory(), "Outpath-Modding.dll");
 		public static string HarmonyAssemblePath = Path.Combine(Application.dataPath, "Managed", "0Harmony.dll");
@@ -21,28 +21,28 @@ namespace Outpath_Modding
 				if (IsLoaded)
 					return;
 
-                if (!File.Exists(Loader.ModAssemblePath) || !File.Exists(Loader.HarmonyAssemblePath))
-                    Loader.IsLoaded = false;
+                if (!File.Exists(LoaderManager.ModAssemblePath) || !File.Exists(LoaderManager.HarmonyAssemblePath))
+                    LoaderManager.IsLoaded = false;
 
-				Loader.HarmonyAssembly = Assembly.LoadFile(Loader.HarmonyAssemblePath);
+				LoaderManager.HarmonyAssembly = Assembly.LoadFile(LoaderManager.HarmonyAssemblePath);
 
 				if (HarmonyAssembly != null)
 				{
-					Loader.ModAssembly = Assembly.LoadFile(Loader.ModAssemblePath);
+					LoaderManager.ModAssembly = Assembly.LoadFile(LoaderManager.ModAssemblePath);
 
-					if (Loader.ModAssembly != null)
+					if (LoaderManager.ModAssembly != null)
 					{
-						Loader.IsLoaded = true;
-						Loader.LoadModding();
+						LoaderManager.IsLoaded = true;
+						LoaderManager.LoadModding();
 					}
-					else Loader.IsLoaded = false;
+					else LoaderManager.IsLoaded = false;
 				}
-				else Loader.IsLoaded = false;
+				else LoaderManager.IsLoaded = false;
             }
 			catch (Exception ex)
 			{
-                Loader.IsLoaded = false;
-                using (StreamWriter streamWriter = File.CreateText(Loader.ModErrorPath))
+                LoaderManager.IsLoaded = false;
+                using (StreamWriter streamWriter = File.CreateText(LoaderManager.ModErrorPath))
 				{
 					streamWriter.WriteLine(ex.ToString());
 				}
@@ -51,7 +51,7 @@ namespace Outpath_Modding
 
 		public static void LoadModding()
 		{
-			Loader.ModAssembly.GetType("Outpath_Modding.Loader.Loader").GetMethod("Load").Invoke(null, new object[] { });
+			LoaderManager.ModAssembly.GetType("Outpath_Modding.Loader.Loader").GetMethod("Load").Invoke(null, new object[] { });
 		}
 	}
 }

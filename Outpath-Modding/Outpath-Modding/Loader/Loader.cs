@@ -7,6 +7,7 @@ using Outpath_Modding.GameConsole;
 using Outpath_Modding.GameConsole.Components;
 using Outpath_Modding.GameConsole.Commands;
 using Outpath_Modding.Events;
+using Outpath_Modding.API.Config;
 
 namespace Outpath_Modding.Loader
 {
@@ -14,7 +15,7 @@ namespace Outpath_Modding.Loader
     {
         public static Version Version { get; } = Assembly.GetExecutingAssembly().GetName().Version;
 
-        public static List<IOMod> Mods { get; } = new List<IOMod>();
+        public static List<IMod<IConfig>> Mods { get; } = new List<IMod<IConfig>>();
 
         private static int loadedDependenciesCount;
         private static int loadedModsCount;
@@ -46,11 +47,13 @@ namespace Outpath_Modding.Loader
 
                     foreach (Type type in modAssembly.GetTypes())
                     {
-                        if (!type.IsSubclassOf(typeof(OMod))) continue;
+                        if (!IsDerivedFromPlugin(type))
+                            continue;
 
-                        IOMod oMod = Activator.CreateInstance(type) as IOMod;
+                        IMod<IConfig> oMod = Activator.CreateInstance(type) as IMod<IConfig>;
                         oMod.ModAssembly = modAssembly;
                         Mods.Add(oMod);
+                        ConfigManager.LoadConfig(oMod);
 
                         oMod.OnLoaded();
                     }
@@ -91,6 +94,24 @@ namespace Outpath_Modding.Loader
             }
 
             Logger.Info($"Loaded {loadedDependenciesCount} dependencies!");
+        }
+
+        private static bool IsDerivedFromPlugin(Type type)
+        {
+            while (type is not null)
+            {
+                type = type.BaseType;
+
+                if (type is { IsGenericType: true })
+                {
+                    Type genericTypeDef = type.GetGenericTypeDefinition();
+
+                    if (genericTypeDef == typeof(Mod<>))
+                        return true;
+                }
+            }
+
+            return false;
         }
     }
 }

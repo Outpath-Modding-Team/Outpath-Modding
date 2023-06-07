@@ -8,6 +8,7 @@ namespace Outpath_Modding.Loader
         public static string Mods = Path.Combine(Main, "Mods");
         public static string Dependencies = Path.Combine(Main, "Dependencies");
         public static string Configs = Path.Combine(Main, "Configs");
+        public static string Resources = Path.Combine(Main, "Resources");
         public static string AssetBundles = Path.Combine(Main, "AssetBundles");
         public static string Log = Path.Combine(Main, "Log");
 
@@ -17,6 +18,7 @@ namespace Outpath_Modding.Loader
             if (!Directory.Exists(Mods)) Directory.CreateDirectory(Mods);
             if (!Directory.Exists(Dependencies)) Directory.CreateDirectory(Dependencies);
             if (!Directory.Exists(Configs)) Directory.CreateDirectory(Configs);
+            if (!Directory.Exists(Resources)) Directory.CreateDirectory(Resources);
             if (!Directory.Exists(AssetBundles)) Directory.CreateDirectory(AssetBundles);
             if (!Directory.Exists(Log)) Directory.CreateDirectory(Log);
 

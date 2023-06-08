@@ -32,27 +32,9 @@ namespace Outpath_Modding.API.Features
             List<ItemInfo> itemInfos = ItemList.instance.itemList.ToList();
             itemInfos.Add(newItemInfo);
             ItemList.instance.itemList = itemInfos.ToArray();
-            itemInfos = ItemList.instance.itemsTypes[(int)ItemType.Material].itemsList.ToList();
+            itemInfos = ItemList.instance.itemsTypes[newItemInfo.itemTypeIndex].itemsList.ToList();
             itemInfos.Add(newItemInfo);
-            ItemList.instance.itemsTypes[(int)ItemType.Material].itemsList = itemInfos.ToArray();
-            return newItemInfo;
-        }
-
-        public static ItemInfo AddNewMaterial(string itemName, string itemDesc, Sprite icon)
-        {
-            ItemInfo newItemInfo = ItemList.instance.itemList.First(x => x.name == "Wood").Clone();
-
-            newItemInfo.itemName = itemName;
-            newItemInfo.itemDesc = itemDesc;
-            newItemInfo.itemID = GetNewItemId();
-            newItemInfo.itemIcon = icon;
-            CustomItemInfos.Add(newItemInfo);
-            List<ItemInfo> itemInfos = ItemList.instance.itemList.ToList();
-            itemInfos.Add(newItemInfo);
-            ItemList.instance.itemList = itemInfos.ToArray();
-            itemInfos = ItemList.instance.itemsTypes[(int)ItemType.Material].itemsList.ToList();
-            itemInfos.Add(newItemInfo);
-            ItemList.instance.itemsTypes[(int)ItemType.Material].itemsList = itemInfos.ToArray();
+            ItemList.instance.itemsTypes[newItemInfo.itemTypeIndex].itemsList = itemInfos.ToArray();
             return newItemInfo;
         }
 
@@ -66,17 +48,62 @@ namespace Outpath_Modding.API.Features
             newItemInfo.itemIcon = itemMaterialSettings.itemIcon;
             newItemInfo.itemMaterialList = itemMaterialSettings.itemToCraft;
             newItemInfo.secondsToCraft = itemMaterialSettings.secondsToCraft;
+            newItemInfo.xpWhenCrafted = itemMaterialSettings.xpWhenCrafted;
             newItemInfo.quantityWhenCrafted = itemMaterialSettings.quantityWhenCrafted;
             CustomItemInfos.Add(newItemInfo);
             List<ItemInfo> itemInfos = ItemList.instance.itemList.ToList();
             itemInfos.Add(newItemInfo);
             ItemList.instance.itemList = itemInfos.ToArray();
-            itemInfos = ItemList.instance.itemsTypes[(int)ItemType.Material].itemsList.ToList();
+            itemInfos = ItemList.instance.itemsTypes[newItemInfo.itemTypeIndex].itemsList.ToList();
             itemInfos.Add(newItemInfo);
-            ItemList.instance.itemsTypes[(int)ItemType.Material].itemsList = itemInfos.ToArray();
+            ItemList.instance.itemsTypes[newItemInfo.itemTypeIndex].itemsList = itemInfos.ToArray();
             if (itemMaterialSettings.itemCraftingType != ItemCraftingType.None)
                 if (!AddToCraftTable(newItemInfo, itemMaterialSettings.itemCraftingType))
                     Logger.Error("Failed to add crafting for item named \"" + itemMaterialSettings.itemName + "\"");
+            return newItemInfo;
+        }
+
+        public static ItemInfo AddNewWeapon(string itemName, Sprite icon)
+        {
+            ItemInfo newItemInfo = ItemList.instance.itemList.First(x => x.name == "Sword Flint").Clone();
+
+            newItemInfo.itemName = itemName;
+            newItemInfo.itemID = GetNewItemId();
+            newItemInfo.itemIcon = icon;
+            CustomItemInfos.Add(newItemInfo);
+            List<ItemInfo> itemInfos = ItemList.instance.itemList.ToList();
+            itemInfos.Add(newItemInfo);
+            ItemList.instance.itemList = itemInfos.ToArray();
+            itemInfos = ItemList.instance.itemsTypes[newItemInfo.itemTypeIndex].itemsList.ToList();
+            itemInfos.Add(newItemInfo);
+            ItemList.instance.itemsTypes[newItemInfo.itemTypeIndex].itemsList = itemInfos.ToArray();
+            return newItemInfo;
+        }
+
+        public static ItemInfo AddNewWeapon(ItemWeaponSettings itemWeaponSettings)
+        {
+            ItemInfo newItemInfo = ItemList.instance.itemList.First(x => x.name == "Sword Flint").Clone();
+
+            newItemInfo.itemName = itemWeaponSettings.itemName;
+            newItemInfo.itemDesc = itemWeaponSettings.itemDescription;
+            newItemInfo.itemID = GetNewItemId();
+            newItemInfo.itemIcon = itemWeaponSettings.itemIcon;
+            newItemInfo.toolTier = itemWeaponSettings.toolTier;
+            newItemInfo.efficiency = itemWeaponSettings.damage;
+            newItemInfo.itemMaterialList = itemWeaponSettings.itemToCraft;
+            newItemInfo.secondsToCraft = itemWeaponSettings.secondsToCraft;
+            newItemInfo.xpWhenCrafted = itemWeaponSettings.xpWhenCrafted;
+            newItemInfo.quantityWhenCrafted = itemWeaponSettings.quantityWhenCrafted;
+            CustomItemInfos.Add(newItemInfo);
+            List<ItemInfo> itemInfos = ItemList.instance.itemList.ToList();
+            itemInfos.Add(newItemInfo);
+            ItemList.instance.itemList = itemInfos.ToArray();
+            itemInfos = ItemList.instance.itemsTypes[newItemInfo.itemTypeIndex].itemsList.ToList();
+            itemInfos.Add(newItemInfo);
+            ItemList.instance.itemsTypes[(int)newItemInfo.itemType].itemsList = itemInfos.ToArray();
+            if (itemWeaponSettings.itemCraftingType != ItemCraftingType.None)
+                if (!AddToCraftTable(newItemInfo, itemWeaponSettings.itemCraftingType))
+                    Logger.Error("Failed to add crafting for item named \"" + itemWeaponSettings.itemName + "\"");
             return newItemInfo;
         }
 
@@ -89,6 +116,7 @@ namespace Outpath_Modding.API.Features
         {
             return ItemList.instance.SpawnItemPrefab(itemInfo, position);
         }
+
         public static GameObject SpawnItem(ItemInfo itemInfo, int quantity)
         {
             return ItemList.instance.SpawnItemPrefab(itemInfo, Vector3.zero, quantity);
@@ -136,47 +164,57 @@ namespace Outpath_Modding.API.Features
         [System.Serializable]
         public class ItemMaterialSettings
         {
-            public ItemMaterialSettings(string itemName, Sprite itemIcon)
-            {
-                this.itemName = itemName;
-                this.itemIcon = itemIcon;
-            }
-
-            public ItemMaterialSettings(string itemName, string itemDescription, Sprite itemIcon)
+            public ItemMaterialSettings(string itemName, Sprite itemIcon, string itemDescription = "", ItemMaterial[] itemToCraft = null, int secondsToCraft = 2, int quantityWhenCrafted = 1, int xpWhenCrafted = 0, ItemCraftingType itemCraftingType = ItemCraftingType.None)
             {
                 this.itemName = itemName;
                 this.itemDescription = itemDescription;
                 this.itemIcon = itemIcon;
-            }
-
-            public ItemMaterialSettings(string itemName, Sprite itemIcon, ItemMaterial[] itemToCraft, int secondsToCraft, int quantityWhenCrafted, ItemCraftingType itemCraftingType)
-            {
-                this.itemName = itemName;
-                this.itemIcon = itemIcon;
+                if (itemToCraft == null) itemToCraft = new ItemMaterial[0];
                 this.itemToCraft = itemToCraft;
                 this.secondsToCraft = secondsToCraft;
-                this.quantityWhenCrafted = quantityWhenCrafted;
-                this.itemCraftingType = itemCraftingType;
-            }
-
-            public ItemMaterialSettings(string itemName, string itemDescription, Sprite itemIcon, ItemMaterial[] itemToCraft, int secondsToCraft, int quantityWhenCrafted, ItemCraftingType itemCraftingType)
-            {
-                this.itemName = itemName;
-                this.itemDescription = itemDescription;
-                this.itemIcon = itemIcon;
-                this.itemToCraft = itemToCraft;
-                this.secondsToCraft = secondsToCraft;
+                this.xpWhenCrafted = xpWhenCrafted;
                 this.quantityWhenCrafted = quantityWhenCrafted;
                 this.itemCraftingType = itemCraftingType;
             }
 
             public string itemName;
-            public string itemDescription = string.Empty;
+            public string itemDescription;
             public Sprite itemIcon;
-            public ItemMaterial[] itemToCraft = new ItemMaterial[0];
-            public int secondsToCraft = 0;
-            public int quantityWhenCrafted = 1;
-            public ItemCraftingType itemCraftingType = ItemCraftingType.None;
+            public ItemMaterial[] itemToCraft;
+            public int secondsToCraft;
+            public int xpWhenCrafted;
+            public int quantityWhenCrafted;
+            public ItemCraftingType itemCraftingType;
+        }
+
+        [System.Serializable]
+        public class ItemWeaponSettings
+        {
+            public ItemWeaponSettings(string itemName, Sprite itemIcon, string itemDescription = "", int toolTier = 1, int damage = 1, ItemMaterial[] itemToCraft = null, int secondsToCraft = 2, int quantityWhenCrafted = 0, int xpWhenCrafted = 1, ItemCraftingType itemCraftingType = ItemCraftingType.None)
+            {
+                this.itemName = itemName;
+                this.itemIcon = itemIcon;
+                this.itemDescription = itemDescription;
+                this.toolTier = toolTier;
+                this.damage = damage;
+                if (itemToCraft == null) itemToCraft = new ItemMaterial[0];
+                this.itemToCraft = itemToCraft;
+                this.secondsToCraft = secondsToCraft;
+                this.xpWhenCrafted = xpWhenCrafted;
+                this.quantityWhenCrafted = quantityWhenCrafted;
+                this.itemCraftingType = itemCraftingType;
+            }
+
+            public string itemName;
+            public string itemDescription;
+            public Sprite itemIcon;
+            public int toolTier;
+            public int damage;
+            public ItemMaterial[] itemToCraft;
+            public int secondsToCraft;
+            public int xpWhenCrafted;
+            public int quantityWhenCrafted;
+            public ItemCraftingType itemCraftingType;
         }
 
         public enum ItemCraftingType

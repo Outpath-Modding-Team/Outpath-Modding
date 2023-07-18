@@ -13,6 +13,15 @@ namespace Outpath_Modding.GameConsole.Components
         {
             try
             {
+                foreach (string abr in command.Abbreviate)
+                {
+                    if (Commands.Exists(x => x.Abbreviate.Contains(abr)))
+                    {
+                        Logger.Error($"An error occurred when adding the \"{command.Command}\" command with \"{command.GetType().Assembly.FullName}\" mod, as such a abbreviate already exists");
+                        return;
+                    }
+                }
+
                 if (Commands.Exists(x => x.Command == command.Command))
                 {
                     Logger.Error($"An error occurred when adding the \"{command.Command}\" command with \"{command.GetType().Assembly.FullName}\" mod, as such a command already exists");
@@ -55,7 +64,7 @@ namespace Outpath_Modding.GameConsole.Components
 
             foreach (ICommand command in Commands)
             {
-                if (command.Command != args[0]) continue;
+                if (command.Command != args[0] && !command.Abbreviate.Contains(args[0])) continue;
 
                 args.Remove(args[0]);
 

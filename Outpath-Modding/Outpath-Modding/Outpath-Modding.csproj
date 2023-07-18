@@ -116,6 +116,7 @@
     <Compile Include="Events\EventsManager.cs" />
     <Compile Include="Events\Patches\PickupedItemPatch.cs" />
     <Compile Include="Events\Patches\TakeOutResourcePatch.cs" />
+    <Compile Include="GameConsole\Commands\Clear.cs" />
     <Compile Include="GameConsole\Commands\Ping.cs" />
     <Compile Include="GameConsole\Components\CommandManager.cs" />
     <Compile Include="GameConsole\Components\ICommand.cs" />

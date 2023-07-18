@@ -31,6 +31,7 @@ namespace Outpath_Modding.Loader
             EventsManager.OnPatch();
 
             CommandManager.AddCommand(new Ping());
+            CommandManager.AddCommand(new Clear());
         }
 
         public static void LoadMods()

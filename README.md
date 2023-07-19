@@ -14,5 +14,8 @@ Modding framework for game Outpath: First Journey.
 2. Extract and move all the files in the "Outpath-Modding" folder to the game folder (eg: *\Steam\steamapps\common\Outpath First Journey)
 3. Run the game and done
 
+## Documentation
+Documentation [here](https://outpath-modding.gitbook.io/outpath-modding/) 
+
 ## Social media
 * [Discord](https://discord.gg/XnjNVRz9XM)

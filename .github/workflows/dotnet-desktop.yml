@@ -44,6 +44,12 @@ jobs:
         Expand-Archive -Path References.zip -DestinationPath ${{ env.OUTPATH_REFERENCES }}
         Expand-Archive -Path ${{ env.OUTPATH_REFERENCES }}\Outpath-Dependencies-main\Dependencies.zip -DestinationPath ${{ env.OUTPATH_REFERENCES }}
 
+    - name: Setup NuGet.exe for use with actions
+      uses: NuGet/setup-nuget@v1.1.1
+      
+    - name: Get nuget packages 
+      run: nuget restore ${{ env.Solution_Name }}
+
     - name: Restore the application
       run: msbuild $env:Solution_Name /t:Restore /p:Configuration=$env:Configuration
       env:

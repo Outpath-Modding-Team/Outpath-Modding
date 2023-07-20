@@ -1,0 +1,68 @@
+name: .NET Core Desktop
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+
+  build:
+
+    strategy:
+      matrix:
+        configuration: [Debug, Release]
+
+    runs-on: windows-latest
+
+    env:
+      REFERENCES: https://github.com/Outpath-Modding-Team/Outpath-Dependencies/archive/refs/heads/main.zip
+      OUTPATH_REFERENCES: ${{ github.workspace }}/References
+      Project_Directory: Outpath-Modding\Outpath-Modding
+      Solution_Name: Outpath-Modding.sln
+      Project_Path: Outpath-Modding\Outpath-Modding\Outpath-Modding.csproj
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+
+    - name: Install .NET Core
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 6.0.x
+
+    - name: Setup MSBuild.exe
+      uses: microsoft/setup-msbuild@v1.0.2
+
+    - name: Download Refs
+      shell: pwsh
+      run: |
+        Invoke-WebRequest -Uri ${{ env.REFERENCES }} -OutFile ${{ github.workspace }}/References.zip
+        Expand-Archive -Path References.zip -DestinationPath ${{ env.OUTPATH_REFERENCES }}
+        Expand-Archive -Path env.OUTPATH_REFERENCES/Outpath-Dependencies-main/Dependencies.zip -DestinationPath ${{ env.OUTPATH_REFERENCES }}
+
+    - name: Restore the application
+      run: msbuild $env:Solution_Name /t:Restore /p:Configuration=$env:Configuration
+      env:
+        Configuration: ${{ matrix.configuration }}
+
+    - name: Build the app
+      run: msbuild $env:Project_Path /p:Configuration=$env:Configuration
+      env:
+        Project_Path: ${{ env.Project_Path }}
+        Configuration: ${{ matrix.configuration }}
+        
+    - name: Upload release results
+      uses: actions/upload-artifact@v3
+      with:
+        name: Release Build
+        path: ${{ env.PROJECT_FOLDER }}\bin\Release\Outpath-Modding.dll
+    
+    - name: Upload debug results
+      uses: actions/upload-artifact@v3
+      with:
+        name: Debug Build
+        path: ${{ env.PROJECT_FOLDER }}\bin\Debug\Outpath-Modding.dll

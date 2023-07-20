@@ -42,7 +42,7 @@ jobs:
       run: |
         Invoke-WebRequest -Uri ${{ env.REFERENCES }} -OutFile ${{ github.workspace }}\References.zip
         Expand-Archive -Path References.zip -DestinationPath ${{ env.OUTPATH_REFERENCES }}
-        Expand-Archive -Path env.OUTPATH_REFERENCES\Outpath-Dependencies-main\Dependencies.zip -DestinationPath ${{ env.OUTPATH_REFERENCES }}
+        Expand-Archive -Path ${{ env.OUTPATH_REFERENCES }}\Outpath-Dependencies-main\Dependencies.zip -DestinationPath ${{ env.OUTPATH_REFERENCES }}
 
     - name: Restore the application
       run: msbuild $env:Solution_Name /t:Restore /p:Configuration=$env:Configuration

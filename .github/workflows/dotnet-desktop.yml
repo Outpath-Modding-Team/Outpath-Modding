@@ -65,10 +65,10 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: Release Build
-        path: ${{ env.PROJECT_FOLDER }}\bin\Release\Outpath-Modding.dll
+        path: ${{ env.Project_Directory }}\bin\Release\Outpath-Modding.dll
     
     - name: Upload debug results
       uses: actions/upload-artifact@v3
       with:
         name: Debug Build
-        path: ${{ env.PROJECT_FOLDER }}\bin\Debug\Outpath-Modding.dll
+        path: ${{ env.Project_Directory }}\bin\Debug\Outpath-Modding.dll

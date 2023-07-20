@@ -20,7 +20,7 @@ jobs:
       REFERENCES: https://github.com/Outpath-Modding-Team/Outpath-Dependencies/archive/refs/heads/main.zip
       OUTPATH_REFERENCES: ${{ github.workspace }}\References
       Project_Directory: Outpath-Modding\Outpath-Modding
-      Solution_Name: Outpath-Modding.sln
+      Solution_Name: Outpath-Modding\Outpath-Modding.sln
       Project_Path: Outpath-Modding\Outpath-Modding\Outpath-Modding.csproj
 
     steps:

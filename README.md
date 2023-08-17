@@ -13,6 +13,10 @@ Modding framework for game Outpath.
 1. Download Outpath-Modding.rar in one of the versions [here](https://github.com/MrAfitol/Outpath-Modding/releases) (recommend installing the latest one)
 2. Extract and move all the files in the "Outpath-Modding" folder to the game folder (eg: *\Steam\steamapps\common\Outpath First Journey)
 3. Run the game and done
+   
+## Hotkeys
+### Show/Hide Console (default - F2)
+### Reset Console Position (default - F3)
 
 ## Documentation
 Documentation [here](https://outpath-modding.gitbook.io/outpath-modding/) 

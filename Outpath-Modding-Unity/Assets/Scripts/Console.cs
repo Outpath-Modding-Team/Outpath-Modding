@@ -89,6 +89,7 @@ public class Console : MonoBehaviour
     void Start()
     {
         ClearConsole();
+        OnHideConsole();
 
         SendError("Test Error");
         SendWarn("Test Warn");
@@ -134,15 +135,23 @@ public class Console : MonoBehaviour
     public void OnChangeConsoleState()
     {
         if (consoleCanvasGroup.alpha == 1)
-        {
-            consoleCanvasGroup.alpha = 0;
-            consoleCanvasGroup.blocksRaycasts = false;
-        }
-        else
-        {
-            consoleCanvasGroup.alpha = 1;
-            consoleCanvasGroup.blocksRaycasts = true;
-        }
+            OnHideConsole();
+        else 
+            OnShowConsole();
+    }
+
+    public void OnHideConsole()
+    {
+        consoleCanvasGroup.alpha = 0;
+        consoleCanvasGroup.blocksRaycasts = false;
+        OnCloseWindow();
+    }
+
+    public void OnShowConsole()
+    {
+        consoleCanvasGroup.alpha = 1;
+        consoleCanvasGroup.blocksRaycasts = true;
+        OnOpenWindow();
     }
 
     public void OnChangeConsoleTheme(int themeId)

@@ -8,8 +8,6 @@ namespace Outpath_Modding.Unity.AssetBundleLoader
 
         public AssetBundle AssetBundle { get; set; }
 
-        public UnityEngine.Object[] LoadedAssets { get; set; }
-
         public CustomAssetBundle(string name)
         {
             Name = name;

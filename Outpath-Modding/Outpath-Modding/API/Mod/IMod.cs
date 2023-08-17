@@ -11,6 +11,8 @@ namespace Outpath_Modding.API.Mod
 
         public string Author { get; set; }
 
+        public string Description { get; set; }
+
         public Version Version { get; set; }
 
         public Version OModdingVersion { get; set; }

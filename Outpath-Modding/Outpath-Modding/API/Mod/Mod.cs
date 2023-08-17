@@ -18,7 +18,8 @@ namespace Outpath_Modding.API.Mod
         }
 
         public virtual string Name { get; set; } = "None";
-        public virtual string Author { get; set; } = "None";
+        public virtual string Author { get; set; } = "Unknown";
+        public virtual string Description { get; set; } = "Without description";
         public virtual Version Version { get; set; } = new Version(1, 0, 0);
         public virtual Version OModdingVersion { get; set; } = Loader.Loader.Version;
         public TConfig Config { get; } = new();

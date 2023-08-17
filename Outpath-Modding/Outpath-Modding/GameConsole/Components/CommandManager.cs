@@ -1,7 +1,7 @@
-﻿using UnityEngine;
-using System.Linq;
+﻿using System;
 using System.Collections.Generic;
-using System;
+using System.Linq;
+using UnityEngine;
 
 namespace Outpath_Modding.GameConsole.Components
 {
@@ -30,11 +30,11 @@ namespace Outpath_Modding.GameConsole.Components
 
                 Commands.Add(command);
 
-                Logger.Info($"Successfully added \"{command.Command}\" command with \"{command.GetType().Assembly.FullName}\" mod");
+                //Logger.Info($"Successfully added \"{command.Command}\" command with \"{command.GetType().Assembly.FullName}\" mod");
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
-                Logger.Debug($"An error occurred when adding the \"{command.Command}\" command with \"{command.GetType().Assembly.FullName}\" mod: \n {ex}");
+                Logger.Error($"An error occurred when adding the \"{command.Command}\" command with \"{command.GetType().Assembly.FullName}\" mod: \n {ex}");
             }
         }
 
@@ -50,11 +50,11 @@ namespace Outpath_Modding.GameConsole.Components
 
                 Commands.Remove(command);
 
-                Logger.Info($"Successfully removed \"{command.Command}\" command with \"{command.GetType().Assembly.FullName}\" mod");
+                //Logger.Info($"Successfully removed \"{command.Command}\" command with \"{command.GetType().Assembly.FullName}\" mod");
             }
             catch (Exception ex)
             {
-                Logger.Debug($"An error occurred when removeing the \"{command.Command}\" command with \"{command.GetType().Assembly.FullName}\" mod: \n {ex}");
+                Logger.Error($"An error occurred when removeing the \"{command.Command}\" command with \"{command.GetType().Assembly.FullName}\" mod: \n {ex}");
             }
         }
 

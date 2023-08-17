@@ -11,7 +11,7 @@ namespace Outpath_Modding.Events.EventArguments
             LoadSceneMode = loadSceneMode;
         }
 
-        public Scene Scene;
-        public LoadSceneMode LoadSceneMode;
+        public Scene Scene { get; }
+        public LoadSceneMode LoadSceneMode { get; }
     }
 }

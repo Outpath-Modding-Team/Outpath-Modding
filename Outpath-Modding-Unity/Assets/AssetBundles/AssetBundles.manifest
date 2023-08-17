@@ -1,7 +1,13 @@
 ManifestFileVersion: 0
-CRC: 2882200845
+CRC: 2181231064
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
       Name: console
+      Dependencies: {}
+    Info_1:
+      Name: welcome
+      Dependencies: {}
+    Info_2:
+      Name: modspanel
       Dependencies: {}

@@ -1,13 +1,18 @@
-﻿using System;
+﻿using Outpath_Modding.API.Config;
+using Outpath_Modding.API.Mod;
+using Outpath_Modding.Events;
+using Outpath_Modding.GameConsole;
+using Outpath_Modding.GameConsole.Commands;
+using Outpath_Modding.GameConsole.Components;
+using Outpath_Modding.MenuEditor.ModsPanel;
+using Outpath_Modding.WelcomeMessage;
+using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
-using Outpath_Modding.API.Mod;
-using System.Collections.Generic;
-using Outpath_Modding.GameConsole;
-using Outpath_Modding.GameConsole.Components;
-using Outpath_Modding.GameConsole.Commands;
-using Outpath_Modding.Events;
-using Outpath_Modding.API.Config;
+using UnityEngine;
+using Logger = Outpath_Modding.GameConsole.Logger;
+using Ping = Outpath_Modding.GameConsole.Commands.Ping;
 
 namespace Outpath_Modding.Loader
 {
@@ -22,16 +27,17 @@ namespace Outpath_Modding.Loader
 
         public static void Load()
         {
+            if (PlayerPrefs.GetInt("WelcomeMSG", 0) == 0)
+                WelcomeManager.SetupWelcomePanel();
             Paths.SetupModPaths();
             ConsoleManager.SetupConsole();
+            CommandManager.AddCommand(new Ping());
+            CommandManager.AddCommand(new Clear());
 
             LoadDependencies();
             LoadMods();
-
+            ModsPanelManager.Setup();
             EventsManager.OnPatch();
-
-            CommandManager.AddCommand(new Ping());
-            CommandManager.AddCommand(new Clear());
         }
 
         public static void LoadMods()

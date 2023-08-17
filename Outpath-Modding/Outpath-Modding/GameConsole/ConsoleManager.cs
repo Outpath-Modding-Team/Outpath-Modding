@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Outpath_Modding.Unity.AssetBundleLoader;
+using System;
 using UnityEngine;
-using Outpath_Modding.Unity.AssetBundleLoader;
 using Console = Outpath_Modding.GameConsole.Components.Console;
 
 namespace Outpath_Modding.GameConsole
@@ -24,9 +24,7 @@ namespace Outpath_Modding.GameConsole
 
             try
             {
-                AssetBundleLoader.LoadAssetBundle(CONSOLE_ASSETS);
-
-                var prefab = CONSOLE_ASSETS.AssetBundle.LoadAsset<GameObject>("ConsoleCanvas");
+                var prefab = CONSOLE_ASSETS.LoadAsset<GameObject>("ConsoleCanvas");
 
                 if (prefab == null)
                 {
@@ -42,8 +40,6 @@ namespace Outpath_Modding.GameConsole
                     Logger.Error($"Instantiated assetBundle ({CONSOLE_ASSETS.Name}) but GameObject is null.");
                     return;
                 }
-
-                CONSOLE_ASSETS.LoadedAssets = new UnityEngine.Object[] { ConsoleObj };
 
                 Console = ConsoleObj.AddComponent<Console>();
 

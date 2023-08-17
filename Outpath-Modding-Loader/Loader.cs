@@ -21,28 +21,32 @@ namespace Outpath_Modding
 				if (IsLoaded)
 					return;
 
-                if (!File.Exists(LoaderManager.ModAssemblePath) || !File.Exists(LoaderManager.HarmonyAssemblePath))
-                    LoaderManager.IsLoaded = false;
+                if (!File.Exists(ModAssemblePath) || !File.Exists(HarmonyAssemblePath))
+				{
+					IsLoaded = false;
+					return;
+				}
+                    
 
-				LoaderManager.HarmonyAssembly = Assembly.LoadFile(LoaderManager.HarmonyAssemblePath);
+				HarmonyAssembly = Assembly.LoadFile(HarmonyAssemblePath);
 
 				if (HarmonyAssembly != null)
 				{
-					LoaderManager.ModAssembly = Assembly.LoadFile(LoaderManager.ModAssemblePath);
+					ModAssembly = Assembly.LoadFile(ModAssemblePath);
 
-					if (LoaderManager.ModAssembly != null)
+					if (ModAssembly != null)
 					{
-						LoaderManager.IsLoaded = true;
-						LoaderManager.LoadModding();
+						IsLoaded = true;
+						LoadModding();
 					}
-					else LoaderManager.IsLoaded = false;
+					else IsLoaded = false;
 				}
-				else LoaderManager.IsLoaded = false;
+				else IsLoaded = false;
             }
 			catch (Exception ex)
 			{
-                LoaderManager.IsLoaded = false;
-                using (StreamWriter streamWriter = File.CreateText(LoaderManager.ModErrorPath))
+                IsLoaded = false;
+                using (StreamWriter streamWriter = File.CreateText(ModErrorPath))
 				{
 					streamWriter.WriteLine(ex.ToString());
 				}
@@ -51,7 +55,7 @@ namespace Outpath_Modding
 
 		public static void LoadModding()
 		{
-			LoaderManager.ModAssembly.GetType("Outpath_Modding.Loader.Loader").GetMethod("Load").Invoke(null, new object[] { });
+			ModAssembly.GetType("Outpath_Modding.Loader.Loader").GetMethod("Load").Invoke(null, new object[] { });
 		}
 	}
 }

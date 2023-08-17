@@ -1,5 +1,6 @@
 ﻿using HarmonyLib;
 using Outpath_Modding.Events.EventArguments;
+using Outpath_Modding.MenuEditor;
 using System;
 using UnityEngine.SceneManagement;
 using Logger = Outpath_Modding.GameConsole.Logger;
@@ -20,7 +21,13 @@ namespace Outpath_Modding.Events
 
         public static event OutputhEventHandler<TakeOutResourceEventArgs> TakeOutResource;
 
+        public static event OutputhEventHandler<SetItemToCraftEventArgs> SetItemToCraft;
+
+        public static event OutputhEventHandler<SetItemToInfiniteCraftEventArgs> SetItemToInfiniteCraft;
+
         public static event OutputhEventHandler GameLoaded;
+
+        public static event OutputhEventHandler MenuLoaded;
 
         public static void InvokeEvent<T>(this OutputhEventHandler<T> eventHandler, T args)
         where T : EventArgs
@@ -76,9 +83,24 @@ namespace Outpath_Modding.Events
             TakeOutResource.InvokeEvent(eventArgs);
         }
 
+        public static void OnSetItemToCraft(SetItemToCraftEventArgs eventArgs)
+        {
+            SetItemToCraft.InvokeEvent(eventArgs);
+        }
+
+        public static void OnSetItemToInfiniteCraft(SetItemToInfiniteCraftEventArgs eventArgs)
+        {
+            SetItemToInfiniteCraft.InvokeEvent(eventArgs);
+        }
+
         public static void OnGameLoaded()
         {
             GameLoaded.InvokeEvent();
+        }
+
+        public static void OnMenuLoaded()
+        {
+            MenuLoaded.InvokeEvent();
         }
 
         public static void OnPatch()
@@ -122,6 +144,11 @@ namespace Outpath_Modding.Events
             if (scene.name == "Scene_Game")
             {
                 OnGameLoaded();
+            }
+            else if (scene.name == "Scene_MainMenu")
+            {
+                MenuManager.MainMenuCanvas.Setup();
+                OnMenuLoaded();
             }
         }
     }

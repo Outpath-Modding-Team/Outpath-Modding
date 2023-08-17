@@ -11,8 +11,8 @@ namespace Outpath_Modding.API.Features
 {
     public class Item
     {
-        public static List<ItemInfo> CustomItemInfos = new List<ItemInfo>();
-        public static List<Item> Items = new List<Item>();
+        public static List<ItemInfo> CustomItemInfos { get; private set; } = new List<ItemInfo>();
+        public static List<Item> Items { get; private set; } = new List<Item>();
 
         public GameObject GameObject;
 

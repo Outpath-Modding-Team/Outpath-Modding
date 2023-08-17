@@ -1,9 +1,9 @@
-﻿using TMPro;
-using System;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
 
 namespace Outpath_Modding.GameConsole.Components
 {
@@ -62,7 +62,7 @@ namespace Outpath_Modding.GameConsole.Components
 
             ConsoleKeys = new List<ConsoleKey>()
             {
-                new ConsoleKey("ShowHideConsole", KeyCode.F1),
+                new ConsoleKey("ShowHideConsole", KeyCode.F2),
                 new ConsoleKey("ResetConsole", KeyCode.F3)
             };
 
@@ -91,6 +91,7 @@ namespace Outpath_Modding.GameConsole.Components
         void Start()
         {
             ClearConsole();
+            OnHideConsole();
 
             if (Logger.LogText.Count > 0)
             {
@@ -157,15 +158,23 @@ namespace Outpath_Modding.GameConsole.Components
         public void OnChangeConsoleState()
         {
             if (consoleCanvasGroup.alpha == 1)
-            {
-                consoleCanvasGroup.alpha = 0;
-                consoleCanvasGroup.blocksRaycasts = false;
-            }
+                OnHideConsole();
             else
-            {
-                consoleCanvasGroup.alpha = 1;
-                consoleCanvasGroup.blocksRaycasts = true;
-            }
+                OnShowConsole();
+        }
+
+        public void OnHideConsole()
+        {
+            consoleCanvasGroup.alpha = 0;
+            consoleCanvasGroup.blocksRaycasts = false;
+            OnCloseWindow();
+        }
+
+        public void OnShowConsole()
+        {
+            consoleCanvasGroup.alpha = 1;
+            consoleCanvasGroup.blocksRaycasts = true;
+            OnOpenWindow();
         }
 
         public void OnChangeConsoleTheme(int themeId)
@@ -374,7 +383,8 @@ namespace Outpath_Modding.GameConsole.Components
 
             string text = messageInputField.text;
             messageInputField.text = "";
-            consoleText.text = consoleText.text + "\n" + $"[{DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss")}] " + text;
+            if (string.IsNullOrEmpty(consoleText.text)) consoleText.text = consoleText.text + $"[{DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss")}] " + text;
+            else consoleText.text = consoleText.text + "\n" + $"[{DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss")}] " + text;
             CommandManager.OnSendCommand(text);
         }
 
@@ -382,42 +392,48 @@ namespace Outpath_Modding.GameConsole.Components
         {
             if (string.IsNullOrEmpty(text)) return;
 
-            consoleText.text = consoleText.text + "\n" + $"<color=red>[{DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss")}] [Error] " + text + "</color>";
+            if (string.IsNullOrEmpty(consoleText.text)) consoleText.text = consoleText.text + $"<color=red>[{DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss")}] [Error] " + text + "</color>";
+            else consoleText.text = consoleText.text + "\n" + $"<color=red>[{DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss")}] [Error] " + text + "</color>";
         }
 
         public void SendWarn(string text)
         {
             if (string.IsNullOrEmpty(text)) return;
 
-            consoleText.text = consoleText.text + "\n" + $"<color=yellow>[{DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss")}] [Warn] " + text + "</color>";
+            if (string.IsNullOrEmpty(consoleText.text)) consoleText.text = consoleText.text + $"<color=yellow>[{DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss")}] [Warn] " + text + "</color>";
+            else consoleText.text = consoleText.text + "\n" + $"<color=yellow>[{DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss")}] [Warn] " + text + "</color>";
         }
 
         public void SendInfo(string text)
         {
             if (string.IsNullOrEmpty(text)) return;
 
-            consoleText.text = consoleText.text + "\n" + $"<color=green>[{DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss")}] [Info] " + text + "</color>";
+            if (string.IsNullOrEmpty(consoleText.text)) consoleText.text = consoleText.text + $"<color=green>[{DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss")}] [Info] " + text + "</color>";
+            else consoleText.text = consoleText.text + "\n" + $"<color=green>[{DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss")}] [Info] " + text + "</color>";
         }
 
         public void SendDebug(string text)
         {
             if (string.IsNullOrEmpty(text)) return;
 
-            consoleText.text = consoleText.text + "\n" + $"[{DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss")}] [Debug] " + text;
+            if (string.IsNullOrEmpty(consoleText.text)) consoleText.text = consoleText.text + $"[{DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss")}] [Debug] " + text;
+            else consoleText.text = consoleText.text + "\n" + $"[{DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss")}] [Debug] " + text;
         }
 
         public void SendLog(string text)
         {
             if (string.IsNullOrEmpty(text)) return;
 
-            consoleText.text = consoleText.text + "\n" + $"[{DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss")}] " + text;
+            if (string.IsNullOrEmpty(consoleText.text)) consoleText.text = consoleText.text + $"[{DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss")}] " + text;
+            else consoleText.text = consoleText.text + "\n" + $"[{DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss")}] " + text;
         }
 
         public void SendLog(string text, Color color)
         {
             if (string.IsNullOrEmpty(text)) return;
 
-            consoleText.text = consoleText.text + "\n" + $"<color=#{color.ToHexString()}>[{DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss")}] " + text + "</color>";
+            if (string.IsNullOrEmpty(consoleText.text)) consoleText.text = consoleText.text + $"<color=#{color.ToHexString()}>[{DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss")}] " + text + "</color>";
+            else consoleText.text = consoleText.text + "\n" + $"<color=#{color.ToHexString()}>[{DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss")}] " + text + "</color>";
         }
 
         [System.Serializable]

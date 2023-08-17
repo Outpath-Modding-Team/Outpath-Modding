@@ -26,3 +26,5 @@ bld/
 *.user
 *.userosscache
 *.sln.docstates
+
+nuget.config

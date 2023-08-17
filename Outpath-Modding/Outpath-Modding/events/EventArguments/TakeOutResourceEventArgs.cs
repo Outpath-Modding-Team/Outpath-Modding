@@ -12,5 +12,6 @@ namespace Outpath_Modding.Events.EventArguments
 
         public TakeOutResource Rresource { get; }
         public float Damage { get; set; }
+        public bool IsAllowed { get; set; } = true;
     }
 }

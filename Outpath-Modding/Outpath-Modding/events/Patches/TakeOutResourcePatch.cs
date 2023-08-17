@@ -11,9 +11,12 @@ namespace Outpath_Modding.Events.Patches
         static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions, ILGenerator il)
         {
             LocalBuilder eventArgs = il.DeclareLocal(typeof(TakeOutResourceEventArgs));
+            Label ret = il.DefineLabel();
 
             var code = new List<CodeInstruction>(instructions);
             var instructionsToInsert = new List<CodeInstruction>();
+
+            code[0].labels.Add(ret);
 
             instructionsToInsert.Add(new(OpCodes.Ldarg_0));
             instructionsToInsert.Add(new(OpCodes.Ldarg_1));
@@ -25,6 +28,10 @@ namespace Outpath_Modding.Events.Patches
             instructionsToInsert.Add(new(OpCodes.Ldloc_S, eventArgs.LocalIndex));
             instructionsToInsert.Add(new(OpCodes.Callvirt, AccessTools.PropertyGetter(typeof(TakeOutResourceEventArgs), nameof(TakeOutResourceEventArgs.Damage))));
             instructionsToInsert.Add(new(OpCodes.Starg_S, 1));
+
+            instructionsToInsert.Add(new(OpCodes.Ldloc_S, eventArgs.LocalIndex));
+            instructionsToInsert.Add(new(OpCodes.Callvirt, AccessTools.PropertyGetter(typeof(TakeOutResourceEventArgs), nameof(TakeOutResourceEventArgs.IsAllowed))));
+            instructionsToInsert.Add(new(OpCodes.Brfalse_S, ret));
 
             code.InsertRange(0, instructionsToInsert);
 

@@ -7,12 +7,20 @@ namespace Outpath_Modding.Loader
 {
     public class Loader : MonoBehaviour
     {
-        public static string ModErrorPath = Path.Combine(Directory.GetCurrentDirectory(), "LogError.txt");
-        public static string ModAssemblePath = Path.Combine(Directory.GetCurrentDirectory(), "Outpath-Modding.dll");
-        public static string HarmonyAssemblePath = Path.Combine(Application.dataPath, "Managed", "0Harmony.dll");
+        public static string ModErrorPath;
+        public static string ModAssemblePath;
+        public static string HarmonyAssemblePath;
         public static Assembly ModAssembly;
         public static Assembly HarmonyAssembly;
         public static bool IsLoaded;
+
+        private void Awake()
+        {
+            ModErrorPath = Path.Combine(Directory.GetCurrentDirectory(), "LogError.txt");
+            ModAssemblePath = Path.Combine(Directory.GetCurrentDirectory(), "Outpath-Modding.dll");
+            HarmonyAssemblePath = Path.Combine(Application.dataPath, "Managed", "0Harmony.dll");
+            Load();
+        }
 
         public static void Load()
         {
@@ -21,29 +29,33 @@ namespace Outpath_Modding.Loader
                 if (IsLoaded)
                     return;
 
-                if (!File.Exists(Loader.ModAssemblePath) || !File.Exists(Loader.HarmonyAssemblePath))
+                if (!File.Exists(ModAssemblePath) || !File.Exists(HarmonyAssemblePath))
                 {
-                    Loader.IsLoaded = false;
+                    IsLoaded = false;
 #if UNITY_EDITOR
-                    Debug.LogWarning(!File.Exists(Loader.ModAssemblePath) ? "[Outpath-Modding] Mod Assembly not found" : "[Outpath-Modding] Harmony Assembly not found");
+                    if (!File.Exists(ModAssemblePath))
+                        Debug.LogWarning("[Outpath-Modding] Mod Assembly not found");
+                    if (!File.Exists(HarmonyAssemblePath))
+                        Debug.LogWarning("[Outpath-Modding] Harmony Assembly not found");
 #endif
+                    return;
                 }
 
-                Loader.HarmonyAssembly = Assembly.LoadFile(Loader.HarmonyAssemblePath);
+                HarmonyAssembly = Assembly.LoadFile(HarmonyAssemblePath);
 
                 if (HarmonyAssembly != null)
                 {
 
-                    Loader.ModAssembly = Assembly.LoadFile(Loader.ModAssemblePath);
+                    ModAssembly = Assembly.LoadFile(ModAssemblePath);
 
-                    if (Loader.ModAssembly != null)
+                    if (ModAssembly != null)
                     {
-                        Loader.IsLoaded = true;
-                        Loader.LoadModding();
+                        IsLoaded = true;
+                        LoadModding();
                     }
                     else
                     {
-                        Loader.IsLoaded = false;
+                        IsLoaded = false;
 #if UNITY_EDITOR
                         Debug.LogWarning("[Outpath-Modding] Mod Assembly is null");
 #endif
@@ -51,7 +63,7 @@ namespace Outpath_Modding.Loader
                 }
                 else
                 {
-                    Loader.IsLoaded = false;
+                    IsLoaded = false;
 #if UNITY_EDITOR
                     Debug.LogWarning("[Outpath-Modding] Harmony Assembly is null");
 #endif
@@ -59,9 +71,9 @@ namespace Outpath_Modding.Loader
             }
             catch (Exception ex)
             {
-                Loader.IsLoaded = false;
+                IsLoaded = false;
 
-                using (StreamWriter streamWriter = File.CreateText(Loader.ModErrorPath))
+                using (StreamWriter streamWriter = File.CreateText(ModErrorPath))
                 {
                     streamWriter.WriteLine(ex.ToString());
                 }
@@ -73,7 +85,7 @@ namespace Outpath_Modding.Loader
 
         public static void LoadModding()
         {
-            Loader.ModAssembly.GetType("Outpath_Modding.Loader.Loader").GetMethod("Load").Invoke(null, new object[] { });
+            ModAssembly.GetType("Outpath_Modding.Loader").GetMethod("Load").Invoke(null, new object[] { });
         }
     }
 }

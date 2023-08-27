@@ -85,7 +85,7 @@ namespace Outpath_Modding.Loader
 
         public static void LoadModding()
         {
-            ModAssembly.GetType("Outpath_Modding.Loader").GetMethod("Load").Invoke(null, new object[] { });
+            ModAssembly.GetType("Outpath_Modding.Loader.Loader").GetMethod("Load").Invoke(null, new object[] { });
         }
     }
 }

@@ -4,6 +4,8 @@
     {
         Dirt = 0,
         Stone,
-        Sand
+        Sand,
+        Cloud,
+        SendUpper
     }
 }

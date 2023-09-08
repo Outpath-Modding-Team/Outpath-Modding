@@ -1,24 +1,66 @@
-﻿using HarmonyLib;
-using Outpath_Modding.API.Extensions;
+﻿using Outpath_Modding.API.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using static ItemInfo;
+using static PixelationCameraEffect;
 using Logger = Outpath_Modding.GameConsole.Logger;
 
-namespace Outpath_Modding.API.Features
+namespace Outpath_Modding.API.Features.Item
 {
-    public class Item
+    public class CustomItemInfo
     {
-        public static List<ItemInfo> CustomItemInfos { get; private set; } = new List<ItemInfo>();
-        public static List<Item> Items { get; private set; } = new List<Item>();
+        public static List<CustomItemInfo> CustomItemInfos { get; }
 
-        public GameObject GameObject;
-
-        public Item(ItemPrefab itemPrefab)
+        public CustomItemInfo(ItemInfo itemInfo)
         {
-            GameObject = itemPrefab.gameObject;
+            Base = itemInfo;
+            Settings = null;
+            CustomItemInfos.Add(this);
+        }
+
+        public CustomItemInfo(ItemInfo itemInfo, ItemSettings itemSettings)
+        {
+            Base = itemInfo;
+            new OutpathItemInfo(Base);
+            Settings = itemSettings;
+            CustomItemInfos.Add(this);
+        }
+
+        public ItemInfo Base { get; private set; }
+
+        public ItemSettings Settings { get; private set; }
+
+        public void RegistrateItemInfo()
+        {
+            if (Settings != null)
+            {
+                List<ItemInfo> itemInfos = ItemList.instance.itemList.ToList();
+                itemInfos.Add(Base);
+                ItemList.instance.itemList = itemInfos.ToArray();
+                itemInfos = ItemList.instance.itemsTypes[Base.itemTypeIndex].itemsList.ToList();
+                itemInfos.Add(Base);
+                ItemList.instance.itemsTypes[Base.itemTypeIndex].itemsList = itemInfos.ToArray();
+                if (Settings.itemCraftingType != ItemCraftingType.None)
+                    if (!AddToCraftTable(Base, Settings.itemCraftingType))
+                        Logger.Error("Failed to add crafting for item named \"" + Settings.itemName + "\"");
+            }
+            else
+            {
+                List<ItemInfo> itemInfos = ItemList.instance.itemList.ToList();
+                itemInfos.Add(Base);
+                ItemList.instance.itemList = itemInfos.ToArray();
+                itemInfos = ItemList.instance.itemsTypes[Base.itemTypeIndex].itemsList.ToList();
+                itemInfos.Add(Base);
+                ItemList.instance.itemsTypes[Base.itemTypeIndex].itemsList = itemInfos.ToArray();
+            }
+        }
+
+        public static void RegisterAllItems()
+        {
+            foreach (var customItem in CustomItemInfos)
+                customItem.RegistrateItemInfo();
         }
 
         public static ItemInfo AddNewMaterial(string itemName, Sprite icon)
@@ -28,13 +70,7 @@ namespace Outpath_Modding.API.Features
             newItemInfo.itemName = itemName;
             newItemInfo.itemID = GetNewItemId();
             newItemInfo.itemIcon = icon;
-            CustomItemInfos.Add(newItemInfo);
-            List<ItemInfo> itemInfos = ItemList.instance.itemList.ToList();
-            itemInfos.Add(newItemInfo);
-            ItemList.instance.itemList = itemInfos.ToArray();
-            itemInfos = ItemList.instance.itemsTypes[newItemInfo.itemTypeIndex].itemsList.ToList();
-            itemInfos.Add(newItemInfo);
-            ItemList.instance.itemsTypes[newItemInfo.itemTypeIndex].itemsList = itemInfos.ToArray();
+            new CustomItemInfo(newItemInfo);
             return newItemInfo;
         }
 
@@ -50,16 +86,7 @@ namespace Outpath_Modding.API.Features
             newItemInfo.secondsToCraft = itemMaterialSettings.secondsToCraft;
             newItemInfo.xpWhenCrafted = itemMaterialSettings.xpWhenCrafted;
             newItemInfo.quantityWhenCrafted = itemMaterialSettings.quantityWhenCrafted;
-            CustomItemInfos.Add(newItemInfo);
-            List<ItemInfo> itemInfos = ItemList.instance.itemList.ToList();
-            itemInfos.Add(newItemInfo);
-            ItemList.instance.itemList = itemInfos.ToArray();
-            itemInfos = ItemList.instance.itemsTypes[newItemInfo.itemTypeIndex].itemsList.ToList();
-            itemInfos.Add(newItemInfo);
-            ItemList.instance.itemsTypes[newItemInfo.itemTypeIndex].itemsList = itemInfos.ToArray();
-            if (itemMaterialSettings.itemCraftingType != ItemCraftingType.None)
-                if (!AddToCraftTable(newItemInfo, itemMaterialSettings.itemCraftingType))
-                    Logger.Error("Failed to add crafting for item named \"" + itemMaterialSettings.itemName + "\"");
+            new CustomItemInfo(newItemInfo, itemMaterialSettings);
             return newItemInfo;
         }
 
@@ -70,13 +97,7 @@ namespace Outpath_Modding.API.Features
             newItemInfo.itemName = itemName;
             newItemInfo.itemID = GetNewItemId();
             newItemInfo.itemIcon = icon;
-            CustomItemInfos.Add(newItemInfo);
-            List<ItemInfo> itemInfos = ItemList.instance.itemList.ToList();
-            itemInfos.Add(newItemInfo);
-            ItemList.instance.itemList = itemInfos.ToArray();
-            itemInfos = ItemList.instance.itemsTypes[newItemInfo.itemTypeIndex].itemsList.ToList();
-            itemInfos.Add(newItemInfo);
-            ItemList.instance.itemsTypes[newItemInfo.itemTypeIndex].itemsList = itemInfos.ToArray();
+            new CustomItemInfo(newItemInfo);
             return newItemInfo;
         }
 
@@ -94,47 +115,15 @@ namespace Outpath_Modding.API.Features
             newItemInfo.secondsToCraft = itemWeaponSettings.secondsToCraft;
             newItemInfo.xpWhenCrafted = itemWeaponSettings.xpWhenCrafted;
             newItemInfo.quantityWhenCrafted = itemWeaponSettings.quantityWhenCrafted;
-            CustomItemInfos.Add(newItemInfo);
-            List<ItemInfo> itemInfos = ItemList.instance.itemList.ToList();
-            itemInfos.Add(newItemInfo);
-            ItemList.instance.itemList = itemInfos.ToArray();
-            itemInfos = ItemList.instance.itemsTypes[newItemInfo.itemTypeIndex].itemsList.ToList();
-            itemInfos.Add(newItemInfo);
-            ItemList.instance.itemsTypes[(int)newItemInfo.itemType].itemsList = itemInfos.ToArray();
-            if (itemWeaponSettings.itemCraftingType != ItemCraftingType.None)
-                if (!AddToCraftTable(newItemInfo, itemWeaponSettings.itemCraftingType))
-                    Logger.Error("Failed to add crafting for item named \"" + itemWeaponSettings.itemName + "\"");
+            new CustomItemInfo(newItemInfo, itemWeaponSettings);
             return newItemInfo;
-        }
-
-        public static GameObject SpawnItem(ItemInfo itemInfo)
-        {
-            return ItemList.instance.SpawnItemPrefab(itemInfo, Vector3.zero);
-        }
-
-        public static GameObject SpawnItem(ItemInfo itemInfo, Vector3 position)
-        {
-            return ItemList.instance.SpawnItemPrefab(itemInfo, position);
-        }
-
-        public static GameObject SpawnItem(ItemInfo itemInfo, int quantity)
-        {
-            return ItemList.instance.SpawnItemPrefab(itemInfo, Vector3.zero, quantity);
-        }
-
-        public static GameObject SpawnItem(ItemInfo itemInfo, Vector3 position, int quantity)
-        {
-            return ItemList.instance.SpawnItemPrefab(itemInfo, position, quantity);
         }
 
         private static bool AddToCraftTable(ItemInfo itemInfo, ItemCraftingType itemCraftingType)
         {
             try
             {
-                GardenItemInfo gardenItemInfo = null;
-                foreach (var item in InventoryManager.instance.buildCategories)
-                    if (item.buildInCategoryList.ToList().Count(x => x.itemName.Replace(" ", "") == itemCraftingType.ToString()) > 0)
-                        gardenItemInfo = item.buildInCategoryList.ToList().First(x => x.itemName.Replace(" ", "") == itemCraftingType.ToString());
+                GardenItemInfo gardenItemInfo = GetGardenItem(itemCraftingType);
 
                 if (!gardenItemInfo) return false;
 
@@ -150,6 +139,15 @@ namespace Outpath_Modding.API.Features
             }
         }
 
+        private static GardenItemInfo GetGardenItem(ItemCraftingType itemCraftingType)
+        {
+            foreach (var buildCategory in InventoryManager.instance.buildCategories)
+                foreach (var buildSubCategory in buildCategory.CategoriesList)
+                    if (buildSubCategory.buildsInCategoryList.ToList().Count(x => x.itemName.Replace(" ", "") == itemCraftingType.ToString()) > 0)
+                        return buildSubCategory.buildsInCategoryList.ToList().First(x => x.itemName.Replace(" ", "") == itemCraftingType.ToString());
+            return null;
+        }
+
         private static int GetNewItemId()
         {
             int lastItemId = 0;
@@ -161,8 +159,21 @@ namespace Outpath_Modding.API.Features
             return lastItemId + 1;
         }
 
-        [System.Serializable]
-        public class ItemMaterialSettings
+        [Serializable]
+        public class ItemSettings
+        {
+            public string itemName;
+            public string itemDescription;
+            public Sprite itemIcon;
+            public ItemMaterial[] itemToCraft;
+            public int secondsToCraft;
+            public int xpWhenCrafted;
+            public int quantityWhenCrafted;
+            public ItemCraftingType itemCraftingType;
+        }
+
+        [Serializable]
+        public class ItemMaterialSettings : ItemSettings
         {
             public ItemMaterialSettings(string itemName, Sprite itemIcon, string itemDescription = "", ItemMaterial[] itemToCraft = null, int secondsToCraft = 2, int quantityWhenCrafted = 1, int xpWhenCrafted = 0, ItemCraftingType itemCraftingType = ItemCraftingType.None)
             {
@@ -176,19 +187,10 @@ namespace Outpath_Modding.API.Features
                 this.quantityWhenCrafted = quantityWhenCrafted;
                 this.itemCraftingType = itemCraftingType;
             }
-
-            public string itemName;
-            public string itemDescription;
-            public Sprite itemIcon;
-            public ItemMaterial[] itemToCraft;
-            public int secondsToCraft;
-            public int xpWhenCrafted;
-            public int quantityWhenCrafted;
-            public ItemCraftingType itemCraftingType;
         }
 
-        [System.Serializable]
-        public class ItemWeaponSettings
+        [Serializable]
+        public class ItemWeaponSettings : ItemSettings
         {
             public ItemWeaponSettings(string itemName, Sprite itemIcon, string itemDescription = "", int toolTier = 1, int damage = 1, ItemMaterial[] itemToCraft = null, int secondsToCraft = 2, int quantityWhenCrafted = 0, int xpWhenCrafted = 1, ItemCraftingType itemCraftingType = ItemCraftingType.None)
             {
@@ -205,16 +207,8 @@ namespace Outpath_Modding.API.Features
                 this.itemCraftingType = itemCraftingType;
             }
 
-            public string itemName;
-            public string itemDescription;
-            public Sprite itemIcon;
             public int toolTier;
             public int damage;
-            public ItemMaterial[] itemToCraft;
-            public int secondsToCraft;
-            public int xpWhenCrafted;
-            public int quantityWhenCrafted;
-            public ItemCraftingType itemCraftingType;
         }
 
         public enum ItemCraftingType

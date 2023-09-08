@@ -1,4 +1,6 @@
 ﻿using HarmonyLib;
+using Outpath_Modding.API.Features;
+using Outpath_Modding.API.Features.Item;
 using Outpath_Modding.Events.EventArguments;
 using Outpath_Modding.MenuEditor;
 using System;
@@ -140,9 +142,15 @@ namespace Outpath_Modding.Events
         private static void OnSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
         {
             OnChangedScene(new ChangedSceneEventArgs(scene, loadSceneMode));
-
+            
             if (scene.name == "Scene_Game")
             {
+                foreach (var block in ArchipelagoManager.instance.blocksList)
+                {
+                    Logger.Info("Block: " + block.name);
+                }
+                CustomItemInfo.RegisterAllItems();
+                IslandBlock.AddAllPropsToSpawn();
                 OnGameLoaded();
             }
             else if (scene.name == "Scene_MainMenu")

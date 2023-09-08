@@ -3,6 +3,10 @@
     public enum BiomeType
     {
         Grasslands = 0,
-        Amberpath
+        Amberpath,
+        OldDust,
+        Unseen,
+        WhitePeaks,
+        Sky
     }
 }

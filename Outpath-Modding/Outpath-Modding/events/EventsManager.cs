@@ -142,13 +142,9 @@ namespace Outpath_Modding.Events
         private static void OnSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
         {
             OnChangedScene(new ChangedSceneEventArgs(scene, loadSceneMode));
-            
+
             if (scene.name == "Scene_Game")
             {
-                foreach (var block in ArchipelagoManager.instance.blocksList)
-                {
-                    Logger.Info("Block: " + block.name);
-                }
                 CustomItemInfo.RegisterAllItems();
                 IslandBlock.AddAllPropsToSpawn();
                 OnGameLoaded();

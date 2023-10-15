@@ -167,14 +167,24 @@ namespace Outpath_Modding.GameConsole.Components
         {
             consoleCanvasGroup.alpha = 0;
             consoleCanvasGroup.blocksRaycasts = false;
-            OnCloseWindow();
+            if (!isCloseWindow)
+            {
+                downPanel.gameObject.SetActive(false);
+
+                upPanel.GetComponent<RectTransform>().sizeDelta = new Vector2(300, 25);
+                hideButton_Open.gameObject.SetActive(true);
+                hideButton_Close.gameObject.SetActive(false);
+            }
         }
 
         public void OnShowConsole()
         {
             consoleCanvasGroup.alpha = 1;
             consoleCanvasGroup.blocksRaycasts = true;
-            OnOpenWindow();
+            if (!isCloseWindow)
+            {
+                OnOpenWindow();
+            }
         }
 
         public void OnChangeConsoleTheme(int themeId)

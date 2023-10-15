@@ -6,7 +6,7 @@ namespace Outpath_Modding.API.Features.Item
 {
     public class OutpathItemInfo
     {
-        public static List<OutpathItemInfo> ItemInfos { get; }
+        public static List<OutpathItemInfo> ItemInfos { get; } = new List<OutpathItemInfo>();
 
         public OutpathItemInfo(ItemInfo itemInfo)
         {
@@ -15,7 +15,7 @@ namespace Outpath_Modding.API.Features.Item
             if (ItemInfos.Count(x => x.Base == itemInfo) > 0)
                 return;
 
-           ItemInfos.Add(this);
+            ItemInfos.Add(this);
         }
 
         public ItemInfo Base { get; private set; }

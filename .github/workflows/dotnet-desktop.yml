@@ -14,7 +14,7 @@ jobs:
     runs-on: windows-latest
     env:
       Dependencies: https://github.com/Outpath-Modding-Team/Outpath-Dependencies/archive/refs/heads/main.zip
-      OUTPATH_DEPENDENCIES: ${{ github.workspace }}\Dependencies
+      OUTPATH_REFERENCES: ${{ github.workspace }}\Dependencies
       Project_Directory: Outpath-Modding\Outpath-Modding
       Solution_Name: Outpath-Modding\Outpath-Modding.sln
       Project_Path: Outpath-Modding\Outpath-Modding\Outpath-Modding.csproj
@@ -36,8 +36,8 @@ jobs:
       shell: pwsh
       run: |
         Invoke-WebRequest -Uri ${{ env.Dependencies }} -OutFile ${{ github.workspace }}\Dependencies.zip
-        Expand-Archive -Path Dependencies.zip -DestinationPath ${{ env.OUTPATH_DEPENDENCIES }}
-        Expand-Archive -Path ${{ env.OUTPATH_DEPENDENCIES }}\Outpath-Dependencies-main\Dependencies.zip -DestinationPath ${{ env.OUTPATH_DEPENDENCIES }}
+        Expand-Archive -Path Dependencies.zip -DestinationPath ${{ env.OUTPATH_REFERENCES }}
+        Expand-Archive -Path ${{ env.OUTPATH_REFERENCES }}\Outpath-Dependencies-main\Dependencies.zip -DestinationPath ${{ env.OUTPATH_REFERENCES }}
 
     - name: Setup NuGet.exe for use with actions
       uses: NuGet/setup-nuget@v1.1.1

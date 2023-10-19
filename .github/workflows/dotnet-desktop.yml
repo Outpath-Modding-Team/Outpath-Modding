@@ -7,36 +7,31 @@ on:
     branches: [ "main" ]
 
 jobs:
-
   build:
-
     strategy:
       matrix:
         configuration: [Debug, Release]
-
     runs-on: windows-latest
-
     env:
       Dependencies: https://github.com/Outpath-Modding-Team/Outpath-Dependencies/archive/refs/heads/main.zip
       OUTPATH_REFERENCES: ${{ github.workspace }}\Dependencies
       Project_Directory: Outpath-Modding\Outpath-Modding
       Solution_Name: Outpath-Modding\Outpath-Modding.sln
       Project_Path: Outpath-Modding\Outpath-Modding\Outpath-Modding.csproj
-
     steps:
     - name: Checkout
       uses: actions/checkout@v3
       with:
         fetch-depth: 0
-
+        
     - name: Install .NET Core
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: 6.0.x
-
+        
     - name: Setup MSBuild.exe
       uses: microsoft/setup-msbuild@v1.0.2
-
+      
     - name: Download Refs
       shell: pwsh
       run: |

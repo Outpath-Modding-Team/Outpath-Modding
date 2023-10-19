@@ -47,46 +47,40 @@
 
   <ItemGroup>
     <Reference Include="Assembly-CSharp">
-      <HintPath>$(OUTPATH_DEPENDENCIES)\Assembly-CSharp.dll</HintPath>
+      <HintPath>$(OUTPATH_REFERENCES)\Assembly-CSharp.dll</HintPath>
     </Reference>
     <Reference Include="Assembly-CSharp-firstpass">
-      <HintPath>$(OUTPATH_DEPENDENCIES)\Assembly-CSharp-firstpass.dll</HintPath>
+      <HintPath>$(OUTPATH_REFERENCES)\Assembly-CSharp-firstpass.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
-      <HintPath>$(OUTPATH_DEPENDENCIES)\Newtonsoft.Json.dll</HintPath>
+      <HintPath>$(OUTPATH_REFERENCES)\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
-      <HintPath>$(OUTPATH_DEPENDENCIES)\Unity.TextMeshPro.dll</HintPath>
+      <HintPath>$(OUTPATH_REFERENCES)\Unity.TextMeshPro.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine">
-      <HintPath>$(OUTPATH_DEPENDENCIES)\UnityEngine.dll</HintPath>
+      <HintPath>$(OUTPATH_REFERENCES)\UnityEngine.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AssetBundleModule">
-      <HintPath>$(OUTPATH_DEPENDENCIES)\UnityEngine.AssetBundleModule.dll</HintPath>
+      <HintPath>$(OUTPATH_REFERENCES)\UnityEngine.AssetBundleModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.CoreModule">
-      <HintPath>$(OUTPATH_DEPENDENCIES)\UnityEngine.CoreModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.GameCenterModule">
-      <HintPath>$(OUTPATH_DEPENDENCIES)\UnityEngine.GameCenterModule.dll</HintPath>
+      <HintPath>$(OUTPATH_REFERENCES)\UnityEngine.CoreModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.ImageConversionModule">
-      <HintPath>$(OUTPATH_DEPENDENCIES)\UnityEngine.ImageConversionModule.dll</HintPath>
+      <HintPath>$(OUTPATH_REFERENCES)\UnityEngine.ImageConversionModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.InputLegacyModule">
-      <HintPath>$(OUTPATH_DEPENDENCIES)\UnityEngine.InputLegacyModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.InputModule">
-      <HintPath>$(OUTPATH_DEPENDENCIES)\UnityEngine.InputModule.dll</HintPath>
+      <HintPath>$(OUTPATH_REFERENCES)\UnityEngine.InputLegacyModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.PhysicsModule">
-      <HintPath>$(OUTPATH_DEPENDENCIES)\UnityEngine.PhysicsModule.dll</HintPath>
+      <HintPath>$(OUTPATH_REFERENCES)\UnityEngine.PhysicsModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UI">
-      <HintPath>$(OUTPATH_DEPENDENCIES)\UnityEngine.UI.dll</HintPath>
+      <HintPath>$(OUTPATH_REFERENCES)\UnityEngine.UI.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UIModule">
-      <HintPath>$(OUTPATH_DEPENDENCIES)\UnityEngine.UIModule.dll</HintPath>
+      <HintPath>$(OUTPATH_REFERENCES)\UnityEngine.UIModule.dll</HintPath>
     </Reference>
   </ItemGroup>
 

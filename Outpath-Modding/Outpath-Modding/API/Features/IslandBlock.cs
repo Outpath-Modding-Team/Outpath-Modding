@@ -1,5 +1,4 @@
-﻿using Mono.Cecil;
-using Outpath_Modding.API.Enums;
+﻿using Outpath_Modding.API.Enums;
 using Outpath_Modding.API.Extensions;
 using System.Collections.Generic;
 using System.Linq;
@@ -61,6 +60,19 @@ namespace Outpath_Modding.API.Features
                     tempProps.Add(prop);
                 }
                 block.propToSpawn = tempProps.ToArray();
+            }
+
+            foreach (var data in addPropToSpawnDatas)
+            {
+                foreach (var block in GameObject.FindObjectsOfType<Block>().Where(x => x.name.Contains(data.BiomeType.ToString()) && x.name.Contains(data.BlockType.ToString())))
+                {
+                    List<Block.Prop> tempProps = block.propToSpawn.ToList();
+                    foreach (var prop in data.Props)
+                    {
+                        tempProps.Add(prop);
+                    }
+                    block.propToSpawn = tempProps.ToArray();
+                }
             }
         }
 
@@ -124,7 +136,7 @@ namespace Outpath_Modding.API.Features
         public class AddPropToSpawnData
         {
             public BiomeType BiomeType { get; set; }
-            
+
             public BlockType BlockType { get; set; }
 
             public List<Block.Prop> Props { get; set; }

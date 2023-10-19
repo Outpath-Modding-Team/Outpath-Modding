@@ -146,7 +146,7 @@ namespace Outpath_Modding.API.Features.Item
         }
 
         private static ItemMaterial[] ConvertItemCraft(ItemCraftMaterial[] itemCraftMaterials)
-        { 
+        {
             List<ItemMaterial> itemMaterials = new List<ItemMaterial>();
             foreach (var item in itemCraftMaterials)
                 itemMaterials.Add(new ItemMaterial() { itemInfo = ItemList.instance.itemList.First(x => x.itemName == item.itemInfoName), quantityNeeded = item.quantityNeeded });

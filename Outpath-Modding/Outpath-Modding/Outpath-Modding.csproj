@@ -58,9 +58,6 @@
     <Reference Include="Unity.TextMeshPro">
       <HintPath>$(Outpath_Dependencies)\Unity.TextMeshPro.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine">
-      <HintPath>$(Outpath_Dependencies)\UnityEngine.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEngine.AssetBundleModule">
       <HintPath>$(Outpath_Dependencies)\UnityEngine.AssetBundleModule.dll</HintPath>
     </Reference>

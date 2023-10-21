@@ -37,6 +37,7 @@ jobs:
       run: |
         Invoke-WebRequest -Uri ${{ env.Dependencies }} -OutFile ${{ github.workspace }}\Dependencies.zip
         Expand-Archive -Path Dependencies.zip -DestinationPath ${{ env.Outpath_Dependencies }}
+        Expand-Archive -Path ${{ env.Outpath_Dependencies }}\Outpath-Dependencies-main\Dependencies.zip -DestinationPath ${{ env.Outpath_Dependencies }}
 
     - name: Setup NuGet.exe for use with actions
       uses: NuGet/setup-nuget@v1.1.1

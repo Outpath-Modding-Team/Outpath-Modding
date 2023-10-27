@@ -15,7 +15,7 @@ jobs:
     env:
       Dependencies: https://github.com/Outpath-Modding-Team/Outpath-Dependencies/archive/refs/heads/main.zip
       Outpath_Dependencies: ${{ github.workspace }}\Dependencies
-      Project_Directory: Outpath-Modding\Outpath-Modding\Outpath-Modding
+      Project_Directory: Outpath-Modding\Outpath-Modding
       Solution_Name: Outpath-Modding\Outpath-Modding.sln
       Project_Path: Outpath-Modding\Outpath-Modding\Outpath-Modding.csproj
     steps:

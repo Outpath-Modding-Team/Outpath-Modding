@@ -15,7 +15,7 @@
     <PackageProjectUrl>https://github.com/Outpath-Modding-Team/Outpath-Modding</PackageProjectUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <RepositoryUrl>https://github.com/Outpath-Modding-Team/Outpath-Modding</RepositoryUrl>
-    <Version>0.0.0.1-alpha6</Version>
+    <Version>0.0.0.1-alpha7</Version>
     <Title>Outpath-Modding</Title>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 	<LangVersion>default</LangVersion>

@@ -6,6 +6,7 @@ using System.Linq;
 using UnityEngine;
 using static TakeOutResource;
 using Resources = UnityEngine.Resources;
+using Logger = Outpath_Modding.GameConsole.Logger;
 
 namespace Outpath_Modding.API.Features
 {
@@ -43,7 +44,7 @@ namespace Outpath_Modding.API.Features
             private set
             {
                 _texture = value;
-                OnChangeSprite();
+                //OnChangeSprite();
             }
         }
 
@@ -62,14 +63,19 @@ namespace Outpath_Modding.API.Features
             ResourcePrefabs.Add(this);
         }
 
-        private void OnChangeSprite()
-        {
-            GameObject MaterialObj = ResourceBase.transform.GetChild(0).GetChild(0).gameObject;
-            Material newMat = new Material(MaterialObj.GetComponent<MeshRenderer>().material);
-            newMat.SetTexture("_BaseMap", _texture);
-            //MaterialObj.GetComponent<MeshRenderer>().material.mainTexture = _texture;
-            MaterialObj.GetComponent<MeshRenderer>().material = newMat;
-        }
+        //private void OnChangeSprite()
+        //{
+        //    Logger.Debug("Work 1 Texture");
+        //    GameObject MaterialObj = ResourceBase.transform.GetChild(0).GetChild(0).gameObject;
+        //    Material newMat = new Material(MaterialObj.GetComponent<MeshRenderer>().material);
+        //    newMat.SetTexture("_BaseMap", _texture);
+        //    //Logger.Debug("Work 2 Texture " + MaterialObj.GetComponent<MeshRenderer>().material.HasTexture("_BaseMap"));
+
+        //    MaterialObj.GetComponent<MeshRenderer>().material = newMat;
+        //    MaterialObj.GetComponent<MeshRenderer>().materials[0] = newMat;
+
+        //    Logger.Debug("Work 2 Texture");
+        //}
 
         public void AddItemGroupToLoot(List<ItemChance> ItemsChance, int minQuantityPerItem, int maxQuantityPerItem, int ItemCount)
         {

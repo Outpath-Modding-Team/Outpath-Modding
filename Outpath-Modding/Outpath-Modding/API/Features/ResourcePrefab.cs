@@ -1,12 +1,13 @@
 ﻿using Outpath_Modding.API.Enums;
 using Outpath_Modding.API.Extensions;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using UnityEngine;
 using static TakeOutResource;
-using Resources = UnityEngine.Resources;
 using Logger = Outpath_Modding.GameConsole.Logger;
+using Resources = UnityEngine.Resources;
 
 namespace Outpath_Modding.API.Features
 {
@@ -38,13 +39,13 @@ namespace Outpath_Modding.API.Features
             set => ResourceBase.currHealth = value;
         }
 
-        public Texture Texture
+        public Sprite Sprite
         {
-            get => _texture;
+            get => _sprite;
             private set
             {
-                _texture = value;
-                //OnChangeSprite();
+                _sprite = value;
+                OnChangeSprite();
             }
         }
 
@@ -54,7 +55,7 @@ namespace Outpath_Modding.API.Features
             set => ResourceBase.itemPoolGroups = value.ToArray();
         }
 
-        private Texture _texture;
+        private Sprite _sprite;
 
         public ResourcePrefab(TakeOutResource resource)
         {
@@ -63,19 +64,19 @@ namespace Outpath_Modding.API.Features
             ResourcePrefabs.Add(this);
         }
 
-        //private void OnChangeSprite()
-        //{
-        //    Logger.Debug("Work 1 Texture");
-        //    GameObject MaterialObj = ResourceBase.transform.GetChild(0).GetChild(0).gameObject;
-        //    Material newMat = new Material(MaterialObj.GetComponent<MeshRenderer>().material);
-        //    newMat.SetTexture("_BaseMap", _texture);
-        //    //Logger.Debug("Work 2 Texture " + MaterialObj.GetComponent<MeshRenderer>().material.HasTexture("_BaseMap"));
-
-        //    MaterialObj.GetComponent<MeshRenderer>().material = newMat;
-        //    MaterialObj.GetComponent<MeshRenderer>().materials[0] = newMat;
-
-        //    Logger.Debug("Work 2 Texture");
-        //}
+        private void OnChangeSprite()
+        {
+            try
+            {
+                GameObject MaterialObj = ResourceBase.transform.GetChild(0).GetChild(0).gameObject;
+                GameObject.Destroy(MaterialObj.GetComponent<RandomMeshSprite>());
+                MaterialObj.GetComponent<MeshRenderer>().material.SetTexture("_BaseMap", Sprite.texture);
+            }
+            catch (Exception ex)
+            {
+                Logger.Error("Error texture: " + ex.ToString());
+            }
+        }
 
         public void AddItemGroupToLoot(List<ItemChance> ItemsChance, int minQuantityPerItem, int maxQuantityPerItem, int ItemCount)
         {
@@ -103,7 +104,7 @@ namespace Outpath_Modding.API.Features
             resourcePrefab.Type = resourceType;
             resourcePrefab.PropName = propName;
             resourcePrefab.MaxHealth = maxHealth;
-            resource.SetActive(false);
+            //resource.SetActive(false);
             return resourcePrefab;
         }
 
@@ -112,22 +113,22 @@ namespace Outpath_Modding.API.Features
             GameObject resource = GameObject.Instantiate(MainResourcePrefab.ResourceBase, new Vector3(0, -100, 0), Quaternion.identity).gameObject;
             GameObject.DontDestroyOnLoad(resource);
             ResourcePrefab resourcePrefab = new ResourcePrefab(resource.GetComponent<TakeOutResource>());
+            resourcePrefab.Sprite = resourcePrefabSettings.Sprite;
             resourcePrefab.Type = resourcePrefabSettings.Type;
             resourcePrefab.PropName = resourcePrefabSettings.PropName;
             resourcePrefab.MaxHealth = resourcePrefabSettings.MaxHealth;
-            resourcePrefab.Texture = resourcePrefabSettings.Texture;
-            resource.SetActive(false);
+            //resource.SetActive(false);
             return resourcePrefab;
         }
 
         public class ResourcePrefabSettings
         {
-            public ResourcePrefabSettings(string propName, float maxHealth, ResourceType resourceType, Texture texture)
+            public ResourcePrefabSettings(string propName, float maxHealth, ResourceType resourceType, Sprite texture)
             {
                 PropName = propName;
                 MaxHealth = maxHealth;
                 Type = resourceType;
-                Texture = texture;
+                Sprite = texture;
             }
 
             public ResourceType Type { get; set; }
@@ -136,7 +137,7 @@ namespace Outpath_Modding.API.Features
 
             public float MaxHealth { get; set; }
 
-            public Texture Texture { get; set; }
+            public Sprite Sprite { get; set; }
         }
 
         [System.Serializable]

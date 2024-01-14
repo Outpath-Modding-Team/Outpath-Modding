@@ -88,7 +88,7 @@ namespace Outpath_Modding.API.Features
             List<Block.Prop> tempProps = PropToSpawn;
             if (firstChance < 0 || firstChance > 1) firstChance = 1;
             if (secondChance < 0 || secondChance > 1) secondChance = 1;
-            tempProps.Add(new Block.Prop() { itemPrefabs = new TakeOutResource[] { resourcePrefab.ResourceBase }, propTypes = new string[] { resourcePrefab.Type.ToString() }, probToSpawn = secondChance, score = firstChance });
+            tempProps.Add(new Block.Prop() { itemPrefabs = new TakeOutResource[] { resourcePrefab.ResourceBase }, probToSpawn = secondChance, score = firstChance });
             PropToSpawn = tempProps;
         }
 
@@ -113,7 +113,7 @@ namespace Outpath_Modding.API.Features
             List<Block.Prop> tempProps = new List<Block.Prop>();
             if (firstChance < 0 || firstChance > 1) firstChance = 1;
             if (secondChance < 0 || secondChance > 1) secondChance = 1;
-            tempProps.Add(new Block.Prop() { itemPrefabs = new TakeOutResource[] { resourcePrefab.ResourceBase }, propTypes = new string[] { resourcePrefab.Type.ToString() }, probToSpawn = secondChance, score = firstChance });
+            tempProps.Add(new Block.Prop() { itemPrefabs = new TakeOutResource[] { resourcePrefab.ResourceBase }, probToSpawn = secondChance, score = firstChance });
             addPropToSpawnDatas.Add(new AddPropToSpawnData(biomeType, blockType, tempProps));
         }
 
@@ -129,7 +129,7 @@ namespace Outpath_Modding.API.Features
             }
             if (firstChance < 0 || firstChance > 1) firstChance = 1;
             if (secondChance < 0 || secondChance > 1) secondChance = 1;
-            tempProps.Add(new Block.Prop() { itemPrefabs = props.ToArray(), propTypes = propTypes.ToArray(), probToSpawn = secondChance, score = firstChance });
+            tempProps.Add(new Block.Prop() { itemPrefabs = props.ToArray(), probToSpawn = secondChance, score = firstChance });
             addPropToSpawnDatas.Add(new AddPropToSpawnData(biomeType, blockType, tempProps));
         }
 

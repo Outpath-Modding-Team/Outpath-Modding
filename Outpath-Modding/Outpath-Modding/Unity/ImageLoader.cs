@@ -21,6 +21,7 @@ namespace Outpath_Modding.Unity
             {
                 FileData = File.ReadAllBytes(FilePath);
                 Tex2D = new Texture2D(2, 2);
+                Tex2D.filterMode = FilterMode.Point;
                 if (Tex2D.LoadImage(FileData))
                     return Tex2D;
             }

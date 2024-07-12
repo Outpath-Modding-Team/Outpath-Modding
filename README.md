@@ -23,3 +23,6 @@ Documentation [here](https://outpath-modding.gitbook.io/outpath-modding/)
 
 ## Social media
 * [Discord](https://discord.gg/XnjNVRz9XM)
+
+## For developers
+This framework is under development, and anyone can join the development. I will be very happy to help. I would also be glad if you joined the development of mods for the game, as it could improve not only this framework but also the game itself. If you need help, I am available on the Discord server.
